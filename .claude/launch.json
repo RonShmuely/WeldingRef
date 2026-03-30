@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "WeldRef Static Server",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", ".", "--listen", "3000", "--no-clipboard"],
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["serve-local.sh"],
       "port": 3000
     }
   ]
