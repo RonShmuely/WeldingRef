@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WeldRef</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ═══════════════════════ SIDEBAR ════════════════════════ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-brand" onclick="navigate('home')">
+        <span class="sidebar-logo-tag">⚡ Reference</span>
+        <div class="sidebar-logo">Weld<span>Ref</span></div>
+      </div>
+      <button class="sidebar-close" id="sidebar-close" onclick="closeSidebar()">✕</button>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Reference</div>
+      <a class="nav-item" data-module="electrodes" onclick="navigate('electrodes')">
+        <span class="nav-icon">🔥</span><span class="nav-label">Electrodes</span>
+      </a>
+      <a class="nav-item" data-module="compare" onclick="navigate('compare')">
+        <span class="nav-icon">⊗</span><span class="nav-label">Compare</span>
+      </a>
+      <a class="nav-item" data-module="machines" onclick="navigate('machines')">
+        <span class="nav-icon">⚙</span><span class="nav-label">Machines</span>
+      </a>
+      <a class="nav-item" data-module="metals" onclick="navigate('metals')">
+        <span class="nav-icon">🔩</span><span class="nav-label">Metal Types</span>
+      </a>
+      <a class="nav-item" data-module="settings" onclick="navigate('settings')">
+        <span class="nav-icon">⚡</span><span class="nav-label">Weld Settings</span>
+      </a>
+
+      <div class="nav-section-label">Daily Tools</div>
+      <a class="nav-item" data-module="tip" onclick="navigate('tip')">
+        <span class="nav-icon">💡</span><span class="nav-label">Daily Tip</span>
+      </a>
+      <a class="nav-item" data-module="hplus" onclick="navigate('hplus')">
+        <span class="nav-icon">🛢</span><span class="nav-label">H-Plus</span>
+      </a>
+      <a class="nav-item" data-module="checklist" onclick="navigate('checklist')">
+        <span class="nav-icon">✅</span><span class="nav-label">Checklist</span>
+      </a>
+
+      <div class="nav-section-label">Records</div>
+      <a class="nav-item" data-module="repairs" onclick="navigate('repairs')">
+        <span class="nav-icon">📋</span><span class="nav-label">Repairs</span>
+      </a>
+      <a class="nav-item" data-module="inventory" onclick="navigate('inventory')">
+        <span class="nav-icon">📦</span><span class="nav-label">Electrode Stock</span>
+      </a>
+      <a class="nav-item" data-module="grinding" onclick="navigate('grinding')">
+        <span class="nav-icon">💿</span><span class="nav-label">Grinding Discs</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="lang-toggle" id="lang-toggle" onclick="toggleLang()">
+        <span id="lang-label">🇮🇱 עברית</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════════ OVERLAY ════════════════════════ -->
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <!-- ═══════════════════════ MAIN ═══════════════════════════ -->
+  <div id="main-wrap">
+    <header class="topbar">
+      <button class="hamburger" id="hamburger" onclick="openSidebar()">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="topbar-title" id="topbar-title">WeldRef</div>
+      <div class="topbar-actions">
+        <span class="topbar-date" id="topbar-date"></span>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <!-- Module content renders here -->
+    </main>
+  </div>
+
+</div><!-- #app -->
+
+<!-- ═══════════════════════ MODULES ════════════════════════ -->
+<script src="modules/tip.js"></script>
+<script src="modules/checklist.js"></script>
+<script src="modules/electrodes.js"></script>
+<script src="modules/compare.js"></script>
+<script src="modules/machines.js"></script>
+<script src="modules/metals.js"></script>
+<script src="modules/settings.js"></script>
+<script src="modules/hplus.js"></script>
+<script src="modules/repairs.js"></script>
+<script src="modules/inventory.js"></script>
+<script src="modules/grinding.js"></script>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// ROUTER
+// ═══════════════════════════════════════════════════════════
+
+const MODULE_MAP = {
+  electrodes: ElectrodesModule,
+  compare:    CompareModule,
+  machines:   MachinesModule,
+  metals:     MetalsModule,
+  settings:   SettingsModule,
+  tip:        TipModule,
+  hplus:      HPlusModule,
+  checklist:  ChecklistModule,
+  repairs:    RepairsModule,
+  inventory:  InventoryModule,
+  grinding:   GrindingModule,
+};
+
+const MODULE_TITLES = {
+  home:       'WeldRef',
+  electrodes: 'Electrodes',
+  compare:    'Compare',
+  machines:   'Machines',
+  metals:     'Metal Types',
+  settings:   'Weld Settings',
+  tip:        'Daily Tip',
+  hplus:      'H-Plus',
+  checklist:  'Checklist',
+  repairs:    'Repair Log',
+  inventory:  'Electrode Stock',
+  grinding:   'Grinding Discs',
+};
+
+let currentModule = 'home';
+
+function navigate(mod) {
+  document.querySelectorAll('.nav-item').forEach(el => {
+    el.classList.toggle('active', el.dataset.module === mod);
+  });
+  document.getElementById('topbar-title').textContent = MODULE_TITLES[mod] || 'WeldRef';
+  currentModule = mod;
+
+  if (window.innerWidth < 768) closeSidebar();
+
+  if (mod === 'home' || !MODULE_MAP[mod]) {
+    renderHome();
+  } else {
+    MODULE_MAP[mod].render();
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// HOME PAGE
+// ═══════════════════════════════════════════════════════════
+
+function renderHome() {
+  const today = new Date().toLocaleDateString('en-GB', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+  });
+  const todayHe = new Date().toLocaleDateString('he-IL', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+  });
+  const tip = TipModule.getTodaysTip();
+  const cl  = ChecklistModule.getSummary();
+
+  document.getElementById('main-content').innerHTML = `
+  <div class="home-page fade-up">
+    <div class="home-header">
+      <div class="home-brand">
+        <span class="logo-tag">⚡ Welding Reference</span>
+        <h1>Weld<span>Ref</span></h1>
+        <p class="home-date">${currentLang === 'he' ? todayHe : today}</p>
+      </div>
+    </div>
+
+    <div class="home-grid">
+      <div class="home-card tip-card" onclick="navigate('tip')">
+        <div class="home-card-label">💡 ${currentLang === 'he' ? 'טיפ יומי' : 'Daily Tip'}</div>
+        <div class="home-card-content">${tip}</div>
+      </div>
+      <div class="home-card checklist-card" onclick="navigate('checklist')">
+        <div class="home-card-label">✅ ${currentLang === 'he' ? 'צ\'קליסט סוף יום' : 'End-of-Day Checklist'}</div>
+        <div class="home-card-content">
+          <div class="checklist-mini-progress">
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:${cl.percent}%"></div>
+            </div>
+            <span style="font-size:13px;color:var(--muted);">${cl.done}/${cl.total}</span>
+          </div>
+          <div style="font-size:12px;color:var(--muted);margin-top:6px;">
+            ${cl.done === cl.total
+              ? '<span style="color:var(--green);">✓ All done!</span>'
+              : `${cl.total - cl.done} item${(cl.total - cl.done) !== 1 ? 's' : ''} remaining`
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quick-access-label">${currentLang === 'he' ? 'גישה מהירה' : 'Quick Access'}</div>
+    <div class="module-grid">
+      <div class="module-card" onclick="navigate('electrodes')">
+        <span class="module-icon">🔥</span>
+        <div class="module-name">${currentLang === 'he' ? 'אלקטרודות' : 'Electrodes'}</div>
+        <div class="module-desc">SMAW · MIG · TIG · FCAW</div>
+      </div>
+      <div class="module-card" onclick="navigate('machines')">
+        <span class="module-icon">⚙</span>
+        <div class="module-name">${currentLang === 'he' ? 'מכונות' : 'Machines'}</div>
+        <div class="module-desc">Helvi · Jasic · Kemppi · BTT</div>
+      </div>
+      <div class="module-card" onclick="navigate('settings')">
+        <span class="module-icon">⚡</span>
+        <div class="module-name">${currentLang === 'he' ? 'הגדרות ריתוך' : 'Weld Settings'}</div>
+        <div class="module-desc">Amps · Hot Start · Arc Force</div>
+      </div>
+      <div class="module-card" onclick="navigate('metals')">
+        <span class="module-icon">🔩</span>
+        <div class="module-name">${currentLang === 'he' ? 'סוגי מתכת' : 'Metal Types'}</div>
+        <div class="module-desc">Wirtgen · Skid Loaders · Fab</div>
+      </div>
+      <div class="module-card" onclick="navigate('hplus')">
+        <span class="module-icon">🛢</span>
+        <div class="module-name">H-Plus</div>
+        <div class="module-desc">${currentLang === 'he' ? 'שמני הידראוליקה וויר' : 'Hydraulic Fluids · Wirtgen'}</div>
+      </div>
+      <div class="module-card" onclick="navigate('repairs')">
+        <span class="module-icon">📋</span>
+        <div class="module-name">${currentLang === 'he' ? 'יומן תיקונים' : 'Repair Log'}</div>
+        <div class="module-desc">${currentLang === 'he' ? 'מעקב ריתוכים' : 'Track your welds'}</div>
+      </div>
+      <div class="module-card" onclick="navigate('inventory')">
+        <span class="module-icon">📦</span>
+        <div class="module-name">${currentLang === 'he' ? 'מלאי אלקטרודות' : 'Electrode Stock'}</div>
+        <div class="module-desc">${currentLang === 'he' ? 'מעקב מלאי' : 'Inventory tracking'}</div>
+      </div>
+      <div class="module-card" onclick="navigate('grinding')">
+        <span class="module-icon">💿</span>
+        <div class="module-name">${currentLang === 'he' ? 'דיסקים' : 'Grinding Discs'}</div>
+        <div class="module-desc">${currentLang === 'he' ? 'מלאי דיסקי שחיקה' : 'Disc inventory'}</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// LANGUAGE TOGGLE
+// ═══════════════════════════════════════════════════════════
+
+let currentLang = localStorage.getItem('weldref_lang') || 'en';
+
+function toggleLang() {
+  currentLang = currentLang === 'en' ? 'he' : 'en';
+  localStorage.setItem('weldref_lang', currentLang);
+  const btn = document.getElementById('lang-label');
+  if (btn) btn.textContent = currentLang === 'en' ? '🇮🇱 עברית' : '🇬🇧 English';
+  document.documentElement.lang = currentLang === 'he' ? 'he' : 'en';
+  document.documentElement.dir  = currentLang === 'he' ? 'rtl' : 'ltr';
+  navigate(currentModule);
+}
+
+// ═══════════════════════════════════════════════════════════
+// SIDEBAR
+// ═══════════════════════════════════════════════════════════
+
+function openSidebar() {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sidebar-overlay').classList.add('visible');
+}
+
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('visible');
+}
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Topbar date
+  document.getElementById('topbar-date').textContent =
+    new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
+
+  // Lang button label
+  document.getElementById('lang-label').textContent =
+    currentLang === 'en' ? '🇮🇱 עברית' : '🇬🇧 English';
+
+  // Render home
+  navigate('home');
+
+  // H-Plus reminder badge on nav item
+  if (HPlusModule.shouldShowReminder()) {
+    const hplusNav = document.querySelector('[data-module="hplus"]');
+    if (hplusNav) {
+      hplusNav.insertAdjacentHTML('beforeend',
+        '<span style="background:var(--gold);color:#000;font-size:8px;font-weight:800;padding:1px 5px;border-radius:2px;margin-left:auto;">!</span>'
+      );
+    }
+  }
+});
+</script>
+</body>
+</html>
