@@ -95,6 +95,30 @@ const MachinesModule = {
       }
     },
     {
+      id: 'zika-i200c',
+      name: 'Zika i-200C Premium',
+      icon: '🇮🇱',
+      type: 'MMA',
+      color: 'blue',
+      specs: [
+        { label: 'Input Voltage',    value: '230V 1-phase / 50Hz' },
+        { label: 'Required Fuse',    value: '25A' },
+        { label: 'Welding Current',  value: '30 – 200A' },
+        { label: 'Duty Cycle',       value: '60% @ 200A' },
+        { label: 'OCV',              value: '70V' },
+        { label: 'Max Electrode',    value: '4.0mm' },
+        { label: 'Weight',           value: '8 kg' },
+        { label: 'IP Rating',        value: 'IP21' },
+        { label: 'Generator',        value: 'Yes (min 10 kVA)' },
+      ],
+      processes: ['SMAW'],
+      notes: 'Compact 230V single-phase inverter MMA welder. Lightweight at 8kg — ideal for portable site work and locations with only a single-phase socket. Generator compatible (10kVA min). Handles up to 4.0mm electrodes. Good portable backup unit alongside the Jasic 630.',
+      settings: {
+        hotStart: '20–35% (test per electrode)',
+        arcForce: '15–30% (E7018) / 35–55% (E6010/E6011)',
+      }
+    },
+    {
       id: 'jasic-cut100',
       name: 'Jasic CUT-100',
       icon: '✂️',

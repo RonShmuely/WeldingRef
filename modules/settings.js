@@ -10,6 +10,7 @@ const SettingsModule = {
     { id: 'jasic-630',       name: 'Jasic ARC 630 Z321',       type: 'SMAW' },
     { id: 'kemppi-200',      name: 'Kemppi MinarcMig Evo 200', type: 'MIG' },
     { id: 'btt-fox-189',     name: 'BTT FOX 189',              type: 'MIG / SMAW' },
+    { id: 'zika-i200c',      name: 'Zika i-200C Premium',      type: 'MMA' },
     { id: 'jasic-cut100',    name: 'Jasic CUT-100',            type: 'Plasma' },
   ],
 
@@ -249,6 +250,83 @@ const SettingsModule = {
         electrode: 'E6011 (SMAW mode)', diameter: '3.2mm', ampRange: '90–120A',
         hotStart: '30–45%', arcForce: '40–55%',
         notes: 'E6011 works on AC — versatile for field conditions where DC quality varies.'
+      },
+    },
+    'zika-i200c': {
+      'Structural steel (general)': {
+        electrode: 'E7018', diameter: '3.2mm (1/8")', ampRange: '100–140A',
+        hotStart: '20–30%', arcForce: '15–25%',
+        notes: 'Low hydrogen. Keep electrodes dry. Max 3.2mm rod recommended — 4.0mm possible at top of range.'
+      },
+      'Structural steel (critical / thick)': {
+        electrode: 'E8018', diameter: '3.2mm', ampRange: '100–140A',
+        hotStart: '25–35%', arcForce: '20–30%',
+        notes: 'Preheat 75–100°C for t > 20mm. 200A limit means max ~3.2mm electrode on this machine.'
+      },
+      'Hardox / wear plate': {
+        electrode: 'E8018', diameter: '3.2mm', ampRange: '100–130A',
+        hotStart: '20–30%', arcForce: '20–30%',
+        notes: 'Preheat 100–150°C. Small beads, control heat input. Machine capacity suits lighter Hardox repairs.'
+      },
+      'Tooth holder repair (Wirtgen)': {
+        electrode: 'E8018', diameter: '3.2mm', ampRange: '100–125A',
+        hotStart: '20–30%', arcForce: '25–35%',
+        notes: 'Preheat 120–150°C mandatory. Short beads. This machine is adequate for light holder repairs.'
+      },
+      'Skid loader frame repair': {
+        electrode: 'E7018', diameter: '3.2mm', ampRange: '100–140A',
+        hotStart: '20–30%', arcForce: '15–25%',
+        notes: 'Good portable option for on-machine repairs. Single-phase socket or generator (10kVA min).'
+      },
+      'Skid loader bucket repair': {
+        electrode: 'E8018', diameter: '3.2mm', ampRange: '100–130A',
+        hotStart: '20–30%', arcForce: '20–30%',
+        notes: 'If Hardox bucket: preheat 100°C. Adequate for moderate bucket repairs at this current range.'
+      },
+      'Fillet weld (light)': {
+        electrode: 'E6013', diameter: '2.5–3.2mm', ampRange: '70–120A',
+        hotStart: '10–20%', arcForce: '10–15%',
+        notes: 'Easy arc, clean results. Good fit for this compact machine on light work.'
+      },
+      'Root pass (pipe / tube)': {
+        electrode: 'E6011', diameter: '3.2mm', ampRange: '90–115A',
+        hotStart: '30–45%', arcForce: '40–55%',
+        notes: '70V OCV is sufficient for E6011. E6010 also works (DC+). Controlled whip technique.'
+      },
+      'Cast iron repair': {
+        electrode: 'ENi-1 (Nickel rod)', diameter: '2.5–3.2mm', ampRange: '60–95A',
+        hotStart: '0–10%', arcForce: '0–10%',
+        notes: 'Preheat 250°C. Short beads (25mm), peen after each pass. Wrap and slow cool. Low amps required.'
+      },
+      'Hard-facing overlay': {
+        electrode: 'Stoody 31 / equivalent', diameter: '3.2mm', ampRange: '120–160A',
+        hotStart: '20–30%', arcForce: '20–30%',
+        notes: 'Build-up layer with E7018 first, then hard-face. Machine handles single-layer hard-face well.'
+      },
+      'Thin sheet (< 3mm)': {
+        electrode: 'E6013', diameter: '2.0–2.5mm', ampRange: '50–80A',
+        hotStart: '10–15%', arcForce: '10–15%',
+        notes: 'Use 2.5mm or smaller. Skip-weld technique to control heat. Good fit for this portable machine.'
+      },
+      'Drum frame repair (Wirtgen)': {
+        electrode: 'E8018', diameter: '3.2mm', ampRange: '110–140A',
+        hotStart: '25–35%', arcForce: '20–30%',
+        notes: 'Adequate for lighter drum frame sections. For heavy sections (>30mm) prefer the Jasic 630.'
+      },
+      'Stainless steel 304/316': {
+        electrode: 'E308L-16', diameter: '2.5mm', ampRange: '65–100A',
+        hotStart: '10–15%', arcForce: '10–15%',
+        notes: 'Possible but prefer MIG (Kemppi) for stainless. Control interpass carefully. Low amps on 2.5mm rod.'
+      },
+      'Carbon to stainless (dissimilar)': {
+        electrode: 'E309L-16', diameter: '2.5mm', ampRange: '65–100A',
+        hotStart: '10–15%', arcForce: '10–15%',
+        notes: 'Use E309L. Prefer MIG for this application — SMAW is a fallback if MIG not available.'
+      },
+      'Aluminum 6061': {
+        electrode: '—', diameter: '—', ampRange: '—',
+        hotStart: '—', arcForce: '—',
+        notes: 'Not suitable for aluminum. Use Kemppi MinarcMig with ER4043 and 100% Argon.'
       },
     },
     'jasic-cut100': {
