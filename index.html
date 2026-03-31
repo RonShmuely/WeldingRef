@@ -55,12 +55,6 @@
       <a class="nav-item" data-module="repairs" onclick="navigate('repairs')">
         <span class="nav-icon">📋</span><span class="nav-label">Repairs</span>
       </a>
-      <a class="nav-item" data-module="inventory" onclick="navigate('inventory')">
-        <span class="nav-icon">📦</span><span class="nav-label">Electrode Stock</span>
-      </a>
-      <a class="nav-item" data-module="grinding" onclick="navigate('grinding')">
-        <span class="nav-icon">💿</span><span class="nav-label">Grinding Discs</span>
-      </a>
     </nav>
 
     <div class="sidebar-footer">
@@ -102,8 +96,6 @@
 <script src="modules/settings.js"></script>
 <script src="modules/hplus.js"></script>
 <script src="modules/repairs.js"></script>
-<script src="modules/inventory.js"></script>
-<script src="modules/grinding.js"></script>
 
 <script>
 // ═══════════════════════════════════════════════════════════
@@ -120,8 +112,6 @@ const MODULE_MAP = {
   hplus:      HPlusModule,
   checklist:  ChecklistModule,
   repairs:    RepairsModule,
-  inventory:  InventoryModule,
-  grinding:   GrindingModule,
 };
 
 const MODULE_TITLES = {
@@ -135,8 +125,6 @@ const MODULE_TITLES = {
   hplus:      'H-Plus',
   checklist:  'Checklist',
   repairs:    'Repair Log',
-  inventory:  'Electrode Stock',
-  grinding:   'Grinding Discs',
 };
 
 let currentModule = 'home';
@@ -236,16 +224,6 @@ function renderHome() {
         <span class="module-icon">📋</span>
         <div class="module-name">${currentLang === 'he' ? 'יומן תיקונים' : 'Repair Log'}</div>
         <div class="module-desc">${currentLang === 'he' ? 'מעקב ריתוכים' : 'Track your welds'}</div>
-      </div>
-      <div class="module-card" onclick="navigate('inventory')">
-        <span class="module-icon">📦</span>
-        <div class="module-name">${currentLang === 'he' ? 'מלאי אלקטרודות' : 'Electrode Stock'}</div>
-        <div class="module-desc">${currentLang === 'he' ? 'מעקב מלאי' : 'Inventory tracking'}</div>
-      </div>
-      <div class="module-card" onclick="navigate('grinding')">
-        <span class="module-icon">💿</span>
-        <div class="module-name">${currentLang === 'he' ? 'דיסקים' : 'Grinding Discs'}</div>
-        <div class="module-desc">${currentLang === 'he' ? 'מלאי דיסקי שחיקה' : 'Disc inventory'}</div>
       </div>
     </div>
   </div>`;
