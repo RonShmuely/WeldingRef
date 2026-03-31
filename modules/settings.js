@@ -36,47 +36,47 @@ const SettingsModule = {
   SETTINGS_DB: {
     'helvi-406c': {
       'Structural steel (general)': {
-        electrode: 'E7018', diameter: '3.2mm (1/8")', ampRange: '100–140A',
+        electrode: 'E7018 (Zika Z-4)', diameter: '3.2mm (1/8")', ampRange: '100–140A',
         hotStart: '20–30%', arcForce: '15–25%',
         notes: 'Low hydrogen. Keep electrodes dry. Clean base metal required.'
       },
       'Structural steel (critical / thick)': {
-        electrode: 'E8018', diameter: '3.2–4.0mm', ampRange: '100–170A',
+        electrode: 'E8018-G (Zika Z-3)', diameter: '3.2–4.0mm', ampRange: '100–170A',
         hotStart: '25–35%', arcForce: '20–30%',
         notes: 'Preheat 75–100°C for t > 20mm. Low hydrogen mandatory. Store in oven.'
       },
       'Hardox / wear plate': {
-        electrode: 'E8018', diameter: '3.2mm', ampRange: '100–140A',
+        electrode: 'E8018-G (Zika Z-3)', diameter: '3.2mm', ampRange: '100–140A',
         hotStart: '20–30%', arcForce: '20–30%',
         notes: 'Preheat 100–150°C. Slow cooling — wrap in blanket. Small beads, low heat input.'
       },
       'Tooth holder repair (Wirtgen)': {
-        electrode: 'E8018', diameter: '3.2mm', ampRange: '100–130A',
+        electrode: 'E8018-G (Zika Z-3)', diameter: '3.2mm', ampRange: '100–130A',
         hotStart: '20–30%', arcForce: '25–35%',
         notes: 'Preheat 120–150°C mandatory. Weld in short beads (max 50mm). Allow interpass cooling to < 200°C.'
       },
       'Drum frame repair (Wirtgen)': {
-        electrode: 'E7018 / E8018', diameter: '4.0mm', ampRange: '140–170A',
+        electrode: 'E7018 (Zika Z-4) / E8018-G (Zika Z-3)', diameter: '4.0mm', ampRange: '140–170A',
         hotStart: '25–35%', arcForce: '20–30%',
         notes: 'Preheat 75–100°C. Use E8018 on high-stress zones. Full penetration on cracks — gouge and clean first.'
       },
       'Skid loader frame repair': {
-        electrode: 'E7018', diameter: '3.2mm', ampRange: '100–140A',
+        electrode: 'E7018 (Zika Z-4)', diameter: '3.2mm', ampRange: '100–140A',
         hotStart: '20–30%', arcForce: '15–25%',
         notes: 'Check for cracks before repairing. Full penetration on boom arms. Preheat if section > 20mm.'
       },
       'Skid loader bucket repair': {
-        electrode: 'E8018', diameter: '3.2mm', ampRange: '100–140A',
+        electrode: 'E8018-G (Zika Z-3)', diameter: '3.2mm', ampRange: '100–140A',
         hotStart: '20–30%', arcForce: '20–30%',
         notes: 'If Hardox bucket: preheat 100°C. Standard mild steel bucket: E7018 is fine.'
       },
       'Fillet weld (light)': {
-        electrode: 'E6013', diameter: '2.5–3.2mm', ampRange: '70–120A',
+        electrode: 'E6013 (Zika Z-11)', diameter: '2.5–3.2mm', ampRange: '70–120A',
         hotStart: '10–20%', arcForce: '10–15%',
         notes: 'Easy drag rod. Clean surfaces. Good for ornamental and non-structural work.'
       },
       'Root pass (pipe / tube)': {
-        electrode: 'E6010 / E6011', diameter: '3.2mm', ampRange: '90–120A',
+        electrode: 'E6010 (Zika Z-610) / E6011', diameter: '3.2mm', ampRange: '90–120A',
         hotStart: '30–50%', arcForce: '40–60%',
         notes: 'E6010 preferred for root (DC+ only). E6011 if AC required. Aggressive arc — controlled whip technique.'
       },
@@ -96,74 +96,74 @@ const SettingsModule = {
         notes: 'This machine supports Lift-TIG and MIG. Use MIG with ER4043 (0.8mm) + 100% Argon, or TIG setup.'
       },
       'Cast iron repair': {
-        electrode: 'ENi-1 (Nickel rod)', diameter: '2.5–3.2mm', ampRange: '60–100A',
+        electrode: 'ENi-1 / ENiFe-CI (Nickel rod)', diameter: '2.5–3.2mm', ampRange: '60–100A',
         hotStart: '0–10%', arcForce: '0–10%',
         notes: 'Preheat 250°C minimum. Short beads (25mm max). Peen immediately after each bead. Wrap and slow cool.'
       },
       'Hard-facing overlay': {
-        electrode: 'Stoody 31 / equivalent', diameter: '3.2–4.0mm', ampRange: '120–160A',
+        electrode: 'Stoody 31 or equivalent hard-facing rod', diameter: '3.2–4.0mm', ampRange: '120–160A',
         hotStart: '20–30%', arcForce: '20–30%',
         notes: 'First pass: build-up layer with E7018. Second pass: hard-face overlay. Max 2 hard-face layers.'
       },
       'Thin sheet (< 3mm)': {
-        electrode: 'E6013', diameter: '2.0–2.5mm', ampRange: '50–80A',
+        electrode: 'E6013 (Zika Z-11)', diameter: '2.0–2.5mm', ampRange: '50–80A',
         hotStart: '10–15%', arcForce: '10–15%',
         notes: 'Use smallest dia possible. Short bead runs to control heat. Tack frequently. Or switch to MIG for thinner sheet.'
       },
     },
     'jasic-630': {
       'Structural steel (general)': {
-        electrode: 'E7018', diameter: '4.0–5.0mm', ampRange: '160–220A',
+        electrode: 'E7018 (Zika Z-4)', diameter: '4.0–5.0mm', ampRange: '160–220A',
         hotStart: '25–40%', arcForce: '20–30%',
         notes: 'This machine excels on large electrodes. Use larger dia for faster deposition on thick plate.'
       },
       'Structural steel (critical / thick)': {
-        electrode: 'E8018', diameter: '4.0–5.0mm', ampRange: '160–220A',
+        electrode: 'E8018-G (Zika Z-3)', diameter: '4.0–5.0mm', ampRange: '160–220A',
         hotStart: '30–45%', arcForce: '25–35%',
         notes: 'Preheat 75–100°C. The 630A capacity handles very large sections without duty cycle concern.'
       },
       'Hardox / wear plate': {
-        electrode: 'E8018', diameter: '4.0mm', ampRange: '160–190A',
+        electrode: 'E8018-G (Zika Z-3)', diameter: '4.0mm', ampRange: '160–190A',
         hotStart: '25–35%', arcForce: '25–35%',
         notes: 'Preheat 100–150°C. Low heat input despite large capacity — control bead size and interpass temp.'
       },
       'Tooth holder repair (Wirtgen)': {
-        electrode: 'E8018', diameter: '4.0mm', ampRange: '155–180A',
+        electrode: 'E8018-G (Zika Z-3)', diameter: '4.0mm', ampRange: '155–180A',
         hotStart: '25–35%', arcForce: '25–35%',
         notes: 'Full capacity available. Control heat input carefully on small sections. Preheat 120–150°C.'
       },
       'Drum frame repair (Wirtgen)': {
-        electrode: 'E8018', diameter: '4.0–5.0mm', ampRange: '170–220A',
+        electrode: 'E8018-G (Zika Z-3)', diameter: '4.0–5.0mm', ampRange: '170–220A',
         hotStart: '30–40%', arcForce: '25–35%',
         notes: 'High deposition for structural drum repairs. Ideal for thick section builds. Preheat 75–100°C.'
       },
       'Skid loader frame repair': {
-        electrode: 'E7018', diameter: '4.0mm', ampRange: '160–200A',
+        electrode: 'E7018 (Zika Z-4)', diameter: '4.0mm', ampRange: '160–200A',
         hotStart: '25–35%', arcForce: '20–30%',
         notes: 'Capable but often overkill for skid loader repairs. Use if needing high deposition.'
       },
       'Skid loader bucket repair': {
-        electrode: 'E8018', diameter: '4.0mm', ampRange: '160–190A',
+        electrode: 'E8018-G (Zika Z-3)', diameter: '4.0mm', ampRange: '160–190A',
         hotStart: '25–35%', arcForce: '20–30%',
         notes: 'Good for thick bucket sections. Preheat if Hardox.'
       },
       'Fillet weld (light)': {
-        electrode: 'E7018', diameter: '3.2–4.0mm', ampRange: '120–170A',
+        electrode: 'E7018 (Zika Z-4)', diameter: '3.2–4.0mm', ampRange: '120–170A',
         hotStart: '20–30%', arcForce: '15–25%',
         notes: 'Use smaller electrodes on this machine for light work. Bottom of its range but works fine.'
       },
       'Root pass (pipe / tube)': {
-        electrode: 'E6010 / E6011', diameter: '3.2–4.0mm', ampRange: '100–150A',
+        electrode: 'E6010 (Zika Z-610) / E6011', diameter: '3.2–4.0mm', ampRange: '100–150A',
         hotStart: '40–60%', arcForce: '50–70%',
         notes: 'High OCV (80V) of this machine is excellent for cellulosic rods. Good arc strike on E6010.'
       },
       'Hard-facing overlay': {
-        electrode: 'Stoody 31 / equivalent', diameter: '4.0–5.0mm', ampRange: '160–220A',
+        electrode: 'Stoody 31 or equivalent hard-facing rod', diameter: '4.0–5.0mm', ampRange: '160–220A',
         hotStart: '25–35%', arcForce: '25–35%',
         notes: 'High deposition hard-facing. Use for large drum wear surfaces. Build-up first with E7018/E8018.'
       },
       'Cast iron repair': {
-        electrode: 'ENi-1', diameter: '3.2mm', ampRange: '80–110A',
+        electrode: 'ENi-1 / ENiFe-CI (Nickel rod)', diameter: '3.2mm', ampRange: '80–110A',
         hotStart: '0–10%', arcForce: '0–10%',
         notes: 'Use low end of machine range. Preheat 250°C. Short beads, peen, slow cool.'
       },
@@ -178,7 +178,7 @@ const SettingsModule = {
         notes: 'Adequate for dissimilar joints. Keep heat input low.'
       },
       'Thin sheet (< 3mm)': {
-        electrode: 'E6013', diameter: '2.5mm', ampRange: '70–90A',
+        electrode: 'E6013 (Zika Z-11)', diameter: '2.5mm', ampRange: '70–90A',
         hotStart: '10–15%', arcForce: '10–15%',
         notes: 'This machine is overkill for thin sheet. Use Helvi or BTT FOX for better control on thin material.'
       },
@@ -227,7 +227,7 @@ const SettingsModule = {
     },
     'btt-fox-189': {
       'Structural steel (general)': {
-        electrode: 'ER70S-6 (MIG) / E7018 (SMAW)', diameter: '0.8mm / 3.2mm', ampRange: '100–160A',
+        electrode: 'ER70S-6 (MIG) / E7018 (Zika Z-4) (SMAW)', diameter: '0.8mm / 3.2mm', ampRange: '100–160A',
         hotStart: '—', arcForce: '—', gas: '75% Ar / 25% CO₂ at 12 L/min (MIG)',
         notes: 'Dual-mode unit. Use MIG for clean work, SMAW for dirty or rusty surfaces.'
       },
@@ -242,7 +242,7 @@ const SettingsModule = {
         notes: 'Lowest end of range. Short circuit transfer. Voltage 14–17V.'
       },
       'Structural steel (critical / thick)': {
-        electrode: 'E7018 (SMAW mode)', diameter: '3.2mm', ampRange: '100–140A',
+        electrode: 'E7018 (Zika Z-4) (SMAW mode)', diameter: '3.2mm', ampRange: '100–140A',
         hotStart: '20–30%', arcForce: '15–25%',
         notes: 'Switch to SMAW mode for low-hydrogen work on thicker sections.'
       },
@@ -254,37 +254,37 @@ const SettingsModule = {
     },
     'zika-i200c': {
       'Structural steel (general)': {
-        electrode: 'E7018', diameter: '3.2mm (1/8")', ampRange: '100–140A',
+        electrode: 'E7018 (Zika Z-4)', diameter: '3.2mm (1/8")', ampRange: '100–140A',
         hotStart: '20–30%', arcForce: '15–25%',
         notes: 'Low hydrogen. Keep electrodes dry. Max 3.2mm rod recommended — 4.0mm possible at top of range.'
       },
       'Structural steel (critical / thick)': {
-        electrode: 'E8018', diameter: '3.2mm', ampRange: '100–140A',
+        electrode: 'E8018-G (Zika Z-3)', diameter: '3.2mm', ampRange: '100–140A',
         hotStart: '25–35%', arcForce: '20–30%',
         notes: 'Preheat 75–100°C for t > 20mm. 200A limit means max ~3.2mm electrode on this machine.'
       },
       'Hardox / wear plate': {
-        electrode: 'E8018', diameter: '3.2mm', ampRange: '100–130A',
+        electrode: 'E8018-G (Zika Z-3)', diameter: '3.2mm', ampRange: '100–130A',
         hotStart: '20–30%', arcForce: '20–30%',
         notes: 'Preheat 100–150°C. Small beads, control heat input. Machine capacity suits lighter Hardox repairs.'
       },
       'Tooth holder repair (Wirtgen)': {
-        electrode: 'E8018', diameter: '3.2mm', ampRange: '100–125A',
+        electrode: 'E8018-G (Zika Z-3)', diameter: '3.2mm', ampRange: '100–125A',
         hotStart: '20–30%', arcForce: '25–35%',
         notes: 'Preheat 120–150°C mandatory. Short beads. This machine is adequate for light holder repairs.'
       },
       'Skid loader frame repair': {
-        electrode: 'E7018', diameter: '3.2mm', ampRange: '100–140A',
+        electrode: 'E7018 (Zika Z-4)', diameter: '3.2mm', ampRange: '100–140A',
         hotStart: '20–30%', arcForce: '15–25%',
         notes: 'Good portable option for on-machine repairs. Single-phase socket or generator (10kVA min).'
       },
       'Skid loader bucket repair': {
-        electrode: 'E8018', diameter: '3.2mm', ampRange: '100–130A',
+        electrode: 'E8018-G (Zika Z-3)', diameter: '3.2mm', ampRange: '100–130A',
         hotStart: '20–30%', arcForce: '20–30%',
         notes: 'If Hardox bucket: preheat 100°C. Adequate for moderate bucket repairs at this current range.'
       },
       'Fillet weld (light)': {
-        electrode: 'E6013', diameter: '2.5–3.2mm', ampRange: '70–120A',
+        electrode: 'E6013 (Zika Z-11)', diameter: '2.5–3.2mm', ampRange: '70–120A',
         hotStart: '10–20%', arcForce: '10–15%',
         notes: 'Easy arc, clean results. Good fit for this compact machine on light work.'
       },
@@ -294,22 +294,22 @@ const SettingsModule = {
         notes: '70V OCV is sufficient for E6011. E6010 also works (DC+). Controlled whip technique.'
       },
       'Cast iron repair': {
-        electrode: 'ENi-1 (Nickel rod)', diameter: '2.5–3.2mm', ampRange: '60–95A',
+        electrode: 'ENi-1 / ENiFe-CI (Nickel rod)', diameter: '2.5–3.2mm', ampRange: '60–95A',
         hotStart: '0–10%', arcForce: '0–10%',
         notes: 'Preheat 250°C. Short beads (25mm), peen after each pass. Wrap and slow cool. Low amps required.'
       },
       'Hard-facing overlay': {
-        electrode: 'Stoody 31 / equivalent', diameter: '3.2mm', ampRange: '120–160A',
+        electrode: 'Stoody 31 or equivalent hard-facing rod', diameter: '3.2mm', ampRange: '120–160A',
         hotStart: '20–30%', arcForce: '20–30%',
         notes: 'Build-up layer with E7018 first, then hard-face. Machine handles single-layer hard-face well.'
       },
       'Thin sheet (< 3mm)': {
-        electrode: 'E6013', diameter: '2.0–2.5mm', ampRange: '50–80A',
+        electrode: 'E6013 (Zika Z-11)', diameter: '2.0–2.5mm', ampRange: '50–80A',
         hotStart: '10–15%', arcForce: '10–15%',
         notes: 'Use 2.5mm or smaller. Skip-weld technique to control heat. Good fit for this portable machine.'
       },
       'Drum frame repair (Wirtgen)': {
-        electrode: 'E8018', diameter: '3.2mm', ampRange: '110–140A',
+        electrode: 'E8018-G (Zika Z-3)', diameter: '3.2mm', ampRange: '110–140A',
         hotStart: '25–35%', arcForce: '20–30%',
         notes: 'Adequate for lighter drum frame sections. For heavy sections (>30mm) prefer the Jasic 630.'
       },
