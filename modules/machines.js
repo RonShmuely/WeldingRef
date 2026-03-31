@@ -23,8 +23,8 @@ const MachinesModule = {
       processes: ['SMAW', 'MIG', 'TIG'],
       notes: 'Primary MMA workhorse. Handles E6010–E8018. Inverter-based — check Hot Start / Arc Force settings for cellulosic rods. Also capable of MIG and Lift-TIG.',
       settings: {
-        hotStart: '20–40%',
-        arcForce: '15–30% (E7018) / 40–60% (E6010/E6011)',
+        hotStart: '20–40% (SMAW mode only)',
+        arcForce: '15–30% (E7018) · 40–60% (E6010/E6011) — SMAW mode only',
       }
     },
     {
@@ -68,7 +68,8 @@ const MachinesModule = {
       notes: 'Compact single-phase MIG for light to medium fabrication. Best with ER70S-6 at 0.8mm wire. Use 75/25 Ar/CO₂ gas mix. Excellent for thin sheet (1–5mm). 230V — runs on site socket.',
       settings: {
         wire: '0.8mm ER70S-6',
-        gas: '75% Ar / 25% CO₂ at 12–15 L/min',
+        gas:  '75% Ar / 25% CO₂ at 12–15 L/min',
+        note: 'MIG only — no Hot Start or Arc Force controls',
       }
     },
     {
@@ -89,9 +90,10 @@ const MachinesModule = {
       processes: ['MIG', 'SMAW'],
       notes: 'Versatile portable MIG/MMA combo unit. Good for field repairs where single-phase supply is available. Handles E6013, E7018 (up to 4mm dia) in MMA mode. MIG mode best for thin plate.',
       settings: {
-        wire: '0.8mm ER70S-6',
-        gas: '75% Ar / 25% CO₂ at 10–12 L/min',
-        hotStart: '10–25% (MMA mode)',
+        wire:     '0.8mm ER70S-6 (MIG mode)',
+        gas:      '75% Ar / 25% CO₂ at 10–12 L/min',
+        hotStart: '10–25% (SMAW mode only)',
+        note:     'No Arc Force adjustment on this unit',
       }
     },
     {
@@ -138,9 +140,10 @@ const MachinesModule = {
       processes: ['Plasma'],
       notes: 'Compressed-air plasma cutter for mild steel, stainless, and aluminum. Start cuts from the edge — avoid mid-plate piercing to preserve consumables. Ensure air supply is dry and filtered (moisture ruins torch tips). Clean cut height 1.5–2x nozzle diameter above work.',
       settings: {
-        pressure: '5.0 bar recommended',
+        pressure:      '5.0 bar recommended',
         cuttingHeight: '1.5–2.5mm above work surface',
-        speed: 'Reduce speed on thick material for clean cut face',
+        speed:         'Reduce on thick material for clean cut face',
+        note:          'Plasma — no Hot Start or Arc Force',
       }
     },
   ],
