@@ -152,15 +152,15 @@ const MachinesModule = {
     document.getElementById('main-content').innerHTML = `
     <div class="fade-up" style="max-width:1060px;">
       <div class="page-header">
-        <div class="page-title">Machine <span>Reference</span></div>
-        <div class="page-sub">Specs, settings, and notes for your welding machines</div>
+        <div class="page-title">${t('Machine','מכונות')} <span>${t('Reference','עיון')}</span></div>
+        <div class="page-sub">${t('Specs, settings, and notes for your welding machines','מפרטים, הגדרות והערות למכונות הריתוך שלך')}</div>
       </div>
 
       <div class="machine-grid">
         ${this.DB.map(m => this.machineCard(m)).join('')}
       </div>
 
-      <div class="module-footer">Specs are reference values. Verify with machine manuals. Duty cycle varies with ambient temperature.</div>
+      <div class="module-footer">${t('Specs are reference values. Verify with machine manuals. Duty cycle varies with ambient temperature.','הערכים הם לעיון בלבד. אמת עם מדריכי המכונה. מחזור עבודה משתנה עם טמפרטורת הסביבה.')}</div>
     </div>`;
   },
 
@@ -171,10 +171,39 @@ const MachinesModule = {
       p==='SMAW'?'red': p==='MIG'?'blue': p==='TIG'?'teal': p==='Plasma'?'teal': 'green'
     }">${p}</span>`).join(' ');
 
+    const specLabelMap = {
+      'Input Voltage':          t('Input Voltage',           'מתח כניסה'),
+      'Input Current':          t('Input Current',           'זרם כניסה'),
+      'Welding Current':        t('Welding Current',         'זרם ריתוך'),
+      'Cutting Current':        t('Cutting Current',         'זרם חיתוך'),
+      'Duty Cycle':             t('Duty Cycle',              'מחזור עבודה'),
+      'OCV':                    t('OCV',                     'מתח פתיחה'),
+      'Weight':                 t('Weight',                  'משקל'),
+      'IP Rating':              t('IP Rating',               'דירוג IP'),
+      'Wire Diameter':          t('Wire Diameter',           'קוטר תיל'),
+      'Max Electrode':          t('Max Electrode',           'אלקטרודה מקסימלית'),
+      'Required Fuse':          t('Required Fuse',           'נתיך נדרש'),
+      'Generator':              t('Generator compatible',    'תאימות גנרטור'),
+      'Max Cut (mild steel)':   t('Max Cut (mild steel)',    'חיתוך מקסימלי (פלדה)'),
+      'Air Pressure':           t('Air Pressure',            'לחץ אוויר'),
+      'Air Flow':               t('Air Flow',                'ספיקת אוויר'),
+    };
+
+    const settingKeyMap = {
+      hotStart:      t('Hot Start',      'הדלקה חמה'),
+      arcForce:      t('Arc Force',      'כוח קשת'),
+      wire:          t('Wire',           'תיל'),
+      gas:           t('Gas',            'גז'),
+      pressure:      t('Pressure',       'לחץ'),
+      cuttingHeight: t('Cutting Height', 'גובה חיתוך'),
+      speed:         t('Speed',          'מהירות'),
+      note:          t('Note',           'הערה'),
+    };
+
     const settingRows = Object.entries(m.settings || {}).map(([k, v]) =>
       `<div class="machine-spec-row">
-        <span class="spec-label">${k.replace(/([A-Z])/g,' $1').trim()}</span>
-        <span class="spec-value" style="font-size:12px;font-family:'Barlow',sans-serif;">${v}</span>
+        <span class="spec-label">${settingKeyMap[k] || k.replace(/([A-Z])/g,' $1').trim()}</span>
+        <span class="spec-value" dir="ltr" style="font-size:12px;font-family:'Barlow',sans-serif;">${v}</span>
       </div>`
     ).join('');
 
@@ -191,20 +220,20 @@ const MachinesModule = {
       <div class="machine-card-body">
         ${m.specs.map(s => `
           <div class="machine-spec-row">
-            <span class="spec-label">${s.label}</span>
-            <span class="spec-value">${s.value}</span>
+            <span class="spec-label">${specLabelMap[s.label] || s.label}</span>
+            <span class="spec-value" dir="ltr">${s.value}</span>
           </div>
         `).join('')}
 
         ${m.settings ? `
           <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border);">
-            <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">Quick Settings</div>
+            <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">${t('Quick Settings','הגדרות מהירות')}</div>
             ${settingRows}
           </div>
         ` : ''}
 
         <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border);">
-          <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Notes</div>
+          <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">${t('Notes','הערות')}</div>
           <div style="font-size:12px;color:#aaa;line-height:1.6;">${m.notes}</div>
         </div>
       </div>

@@ -78,38 +78,38 @@ const TipModule = {
     document.getElementById('main-content').innerHTML = `
     <div class="tip-page fade-up">
       <div class="page-header">
-        <div class="page-title">Daily <span>Tip</span></div>
-        <div class="page-sub">${total} welding tips — one per day, rotating automatically</div>
+        <div class="page-title">${t('Daily','טיפ')} <span>${t('Tip','יומי')}</span></div>
+        <div class="page-sub">${total} ${t('welding tips — one per day, rotating automatically','טיפי ריתוך — אחד ליום, מתחלף אוטומטית')}</div>
       </div>
 
       <div class="tip-display" id="tip-display">
-        <div class="tip-day-label">💡 Tip of the Day · ${new Date().toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'})}</div>
+        <div class="tip-day-label">💡 ${t('Tip of the Day','טיפ היום')} · ${new Date().toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'})}</div>
         <div class="tip-text" id="tip-text">${today.text}</div>
-        <div class="tip-category" id="tip-category">Category: ${today.category}</div>
+        <div class="tip-category" id="tip-category">${t('Category','קטגוריה')}: ${today.category}</div>
       </div>
 
       <div class="tip-nav">
-        <button class="btn btn-ghost btn-sm" onclick="TipModule.prev()">← Prev</button>
-        <span class="tip-counter" id="tip-counter">Tip ${today.index + 1} of ${total}</span>
-        <button class="btn btn-ghost btn-sm" onclick="TipModule.next()">Next →</button>
-        <button class="btn btn-ghost btn-sm" onclick="TipModule.jumpToday()">Today</button>
+        <button class="btn btn-ghost btn-sm" onclick="TipModule.prev()">← ${t('Prev','הקודם')}</button>
+        <span class="tip-counter" id="tip-counter">${t('Tip','טיפ')} ${today.index + 1} ${t('of','מתוך')} ${total}</span>
+        <button class="btn btn-ghost btn-sm" onclick="TipModule.next()">${t('Next','הבא')} →</button>
+        <button class="btn btn-ghost btn-sm" onclick="TipModule.jumpToday()">${t('Today','היום')}</button>
       </div>
 
       <div style="margin-bottom:16px;">
-        <div class="section-divider"><span>All Tips</span></div>
+        <div class="section-divider"><span>${t('All Tips','כל הטיפים')}</span></div>
       </div>
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden;">
-        ${this.TIPS.map((t, i) => `
-          <div class="tip-list-item ${i === today.index ? 'style="background:rgba(232,41,11,.05);"' : ''}">
+        ${this.TIPS.map((tip, i) => `
+          <div class="tip-list-item" ${i === today.index ? 'style="background:rgba(232,41,11,.05);"' : ''}>
             <span class="tip-num">${i + 1}</span>
             <div>
-              <div>${t.text}</div>
-              <div style="font-size:10px;color:var(--muted);margin-top:4px;letter-spacing:1px;text-transform:uppercase;">${t.category}</div>
+              <div>${tip.text}</div>
+              <div style="font-size:10px;color:var(--muted);margin-top:4px;letter-spacing:1px;text-transform:uppercase;">${tip.category}</div>
             </div>
           </div>`).join('')}
       </div>
 
-      <div class="module-footer">Tips based on AWS, welding best practices, and field experience.</div>
+      <div class="module-footer">${t('Tips based on AWS, welding best practices, and field experience.','טיפים מבוססים על AWS, שיטות עבודה מומלצות וניסיון שטח.')}</div>
     </div>`;
   },
 
@@ -120,8 +120,8 @@ const TipModule = {
     const cat = document.getElementById('tip-category');
     const ctr = document.getElementById('tip-counter');
     if (el)  el.textContent = t.text;
-    if (cat) cat.textContent = `Category: ${t.category}`;
-    if (ctr) ctr.textContent = `Tip ${this.currentIndex + 1} of ${this.TIPS.length}`;
+    if (cat) cat.textContent = `${window.t('Category','קטגוריה')}: ${t.category}`;
+    if (ctr) ctr.textContent = `${window.t('Tip','טיפ')} ${this.currentIndex + 1} ${window.t('of','מתוך')} ${this.TIPS.length}`;
   },
 
   next()    { this.showTip(this.currentIndex + 1); },

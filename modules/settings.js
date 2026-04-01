@@ -32,6 +32,25 @@ const SettingsModule = {
     'Thin sheet (< 3mm)',
   ],
 
+  // Hebrew display labels for repair types (keys must match REPAIR_TYPES entries)
+  REPAIR_TYPES_HE: {
+    'Structural steel (general)':          'פלדה מבנית (כללי)',
+    'Structural steel (critical / thick)': 'פלדה מבנית (קריטי / עבה)',
+    'Hardox / wear plate':                 'Hardox / לוח שחיקה',
+    'Tooth holder repair (Wirtgen)':       'תיקון מחזיק שן (Wirtgen)',
+    'Drum frame repair (Wirtgen)':         'תיקון מסגרת תוף (Wirtgen)',
+    'Skid loader frame repair':            'תיקון מסגרת סקיד לודר',
+    'Skid loader bucket repair':           'תיקון דלי סקיד לודר',
+    'Fillet weld (light)':                 'ריתוך פינה (קל)',
+    'Root pass (pipe / tube)':             'מעבר שורש (צינור / שפופרת)',
+    'Stainless steel 304/316':             'נירוסטה 304/316',
+    'Carbon to stainless (dissimilar)':    'פחמן לנירוסטה (חומרים שונים)',
+    'Aluminum 6061':                       'אלומיניום 6061',
+    'Cast iron repair':                    'תיקון יציקת ברזל',
+    'Hard-facing overlay':                 'ציפוי קשיח (hard-facing)',
+    'Thin sheet (< 3mm)':                  'פח דק (< 3mm)',
+  },
+
   // [machineId][repairType] → {electrode, diameter, ampRange, hotStart, arcForce, gas, notes}
   SETTINGS_DB: {
     'helvi-406c': {
@@ -342,32 +361,38 @@ const SettingsModule = {
     document.getElementById('main-content').innerHTML = `
     <div class="fade-up" style="max-width:860px;">
       <div class="page-header">
-        <div class="page-title">Weld <span>Settings</span></div>
-        <div class="page-sub">Recommended electrode, amperage, Hot Start, and Arc Force by machine and repair type</div>
+        <div class="page-title">${t('Weld','הגדרות')} <span>${t('Settings','ריתוך')}</span></div>
+        <div class="page-sub">${t(
+          'Recommended electrode, amperage, Hot Start, and Arc Force by machine and repair type',
+          'אלקטרודה, עוצמה, Hot Start ו-Arc Force מומלצים לפי מכונה וסוג תיקון'
+        )}</div>
       </div>
 
       <div class="settings-selectors">
         <div class="form-row">
-          <label class="form-label">Machine</label>
+          <label class="form-label">${t('Machine','מכונה')}</label>
           <select id="st-machine" onchange="SettingsModule.update()">
-            <option value="">— Select Machine —</option>
+            <option value="">${t('— Select Machine —','— בחר מכונה —')}</option>
             ${this.MACHINES.map(m => `<option value="${m.id}">${m.name} (${m.type})</option>`).join('')}
           </select>
         </div>
         <div class="form-row">
-          <label class="form-label">Repair / Joint Type</label>
+          <label class="form-label">${t('Repair / Joint Type','סוג תיקון / חיבור')}</label>
           <select id="st-repair" onchange="SettingsModule.update()">
-            <option value="">— Select Repair Type —</option>
-            ${this.REPAIR_TYPES.map(r => `<option value="${r}">${r}</option>`).join('')}
+            <option value="">${t('— Select Repair Type —','— בחר סוג תיקון —')}</option>
+            ${this.REPAIR_TYPES.map(r => `<option value="${r}">${t(r, this.REPAIR_TYPES_HE[r] || r)}</option>`).join('')}
           </select>
         </div>
       </div>
 
       <div id="st-result">
-        <div class="empty-state"><div class="big">⚡</div><p>Select a machine and repair type to see recommended settings.</p></div>
+        <div class="empty-state"><div class="big">⚡</div><p>${t('Select a machine and repair type to see recommended settings.','בחר מכונה וסוג תיקון כדי לראות הגדרות מומלצות.')}</p></div>
       </div>
 
-      <div class="module-footer">Settings are starting-point recommendations. Always test on scrap first. Actual settings vary with electrode brand, material condition, and position.</div>
+      <div class="module-footer">${t(
+        'Settings are starting-point recommendations. Always test on scrap first. Actual settings vary with electrode brand, material condition, and position.',
+        'ההגדרות הן נקודת התחלה בלבד. תמיד בדוק על גרוטאה תחילה. ההגדרות בפועל משתנות לפי מותג האלקטרודה, מצב החומר והתנוחה.'
+      )}</div>
     </div>`;
   },
 
@@ -380,30 +405,30 @@ const SettingsModule = {
     const db = this.SETTINGS_DB[machineId];
     if (!db) {
       document.getElementById('st-result').innerHTML =
-        '<div class="error-msg">No settings data for this machine yet.</div>';
+        `<div class="error-msg">${t('No settings data for this machine yet.','אין נתוני הגדרות למכונה זו עדיין.')}</div>`;
       return;
     }
     const s = db[repairType];
     if (!s) {
       document.getElementById('st-result').innerHTML =
-        '<div class="error-msg">No settings entry for this combination. Consult machine manual or electrode datasheet.</div>';
+        `<div class="error-msg">${t('No settings entry for this combination. Consult machine manual or electrode datasheet.','אין ערך הגדרות לשילוב זה. עיין במדריך המכונה או בגיליון הנתונים של האלקטרודה.')}</div>`;
       return;
     }
 
     const params = [
-      { label: 'Electrode / Wire', value: s.electrode, unit: '' },
-      { label: 'Diameter',         value: s.diameter,  unit: '' },
-      { label: 'Amperage Range',   value: s.ampRange,  unit: 'A' },
-      { label: 'Hot Start',        value: s.hotStart || '—', unit: '' },
-      { label: 'Arc Force',        value: s.arcForce || '—', unit: '' },
+      { label: t('Electrode / Wire','אלקטרודה / חוט'), value: s.electrode, unit: '' },
+      { label: t('Diameter','קוטר'),                    value: s.diameter,  unit: '' },
+      { label: t('Amperage Range','טווח עוצמה'),        value: s.ampRange,  unit: 'A' },
+      { label: 'Hot Start',                              value: s.hotStart || '—', unit: '' },
+      { label: 'Arc Force',                              value: s.arcForce || '—', unit: '' },
     ];
-    if (s.gas) params.push({ label: 'Gas / Flow', value: s.gas, unit: '' });
+    if (s.gas) params.push({ label: t('Gas / Flow','גז / ספיקה'), value: s.gas, unit: '' });
 
     document.getElementById('st-result').innerHTML = `
     <div class="settings-result" style="animation:fadeUp .25s ease;">
       <div class="settings-result-header">
         <div class="settings-result-machine">${machine.name}</div>
-        <div class="settings-result-type">${repairType}</div>
+        <div class="settings-result-type">${t(repairType, this.REPAIR_TYPES_HE[repairType] || repairType)}</div>
       </div>
       <div class="settings-params-grid">
         ${params.map(p => `
@@ -416,7 +441,7 @@ const SettingsModule = {
       </div>
       ${s.notes ? `
         <div style="padding:16px 20px;border-top:1px solid var(--border);">
-          <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Notes</div>
+          <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">${t('Notes','הערות')}</div>
           <div style="font-size:13px;color:#ccc;line-height:1.6;">${s.notes}</div>
         </div>
       ` : ''}

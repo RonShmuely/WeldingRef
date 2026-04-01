@@ -71,7 +71,7 @@ render() {
     <!-- PROCESS HOME -->
     <div id="e-page-home">
       <div class="page-header">
-        <div class="page-title">Filler Metal <span>Database</span></div>
+        <div class="page-title">${t('Filler Metal','מתכות מילוי')} <span>${t('Database','מאגר נתונים')}</span></div>
         <div class="page-sub">SMAW · MIG / GMAW · TIG / GTAW · FCAW — AWS A5.1 / A5.5 / A5.18 / A5.9 / A5.10 / A5.20 / A5.22</div>
       </div>
       <div class="process-grid">
@@ -79,29 +79,29 @@ render() {
           <span class="process-icon">🔥</span>
           <div class="process-label">SMAW</div>
           <div class="process-full">Shielded Metal Arc Welding</div>
-          <div class="process-desc">Stick welding with coated electrodes. Versatile, portable, works on dirty or rusty metal.</div>
-          <div class="process-count">7 electrodes · E6010, E6011, E6013, E7014, E7018, E7024, E8018</div>
+          <div class="process-desc">${t('Stick welding with coated electrodes. Versatile, portable, works on dirty or rusty metal.','ריתוך מקל עם אלקטרודות מצופות. גמיש, נייד, מתאים למתכת מלוכלכת או חלודה.')}</div>
+          <div class="process-count">7 ${t('electrodes','אלקטרודות')} · E6010, E6011, E6013, E7014, E7018, E7024, E8018</div>
         </div>
         <div class="process-card pc-mig" onclick="eGoProcess('MIG')">
           <span class="process-icon">🌀</span>
           <div class="process-label">MIG / GMAW</div>
           <div class="process-full">Gas Metal Arc Welding</div>
-          <div class="process-desc">Wire-feed welding with shielding gas. Fast, clean, ideal for production and light fabrication.</div>
-          <div class="process-count">6 wires · ER70S-2, ER70S-6, ER308L, ER309L, ER4043, ER5356</div>
+          <div class="process-desc">${t('Wire-feed welding with shielding gas. Fast, clean, ideal for production and light fabrication.','ריתוך תיל עם גז מגן. מהיר, נקי, אידיאלי לייצור ולעבודות קלות.')}</div>
+          <div class="process-count">6 ${t('wires','תילים')} · ER70S-2, ER70S-6, ER308L, ER309L, ER4043, ER5356</div>
         </div>
         <div class="process-card pc-tig" onclick="eGoProcess('TIG')">
           <span class="process-icon">⚙️</span>
           <div class="process-label">TIG / GTAW</div>
           <div class="process-full">Gas Tungsten Arc Welding</div>
-          <div class="process-desc">Precision welding with non-consumable tungsten electrode. Cleanest welds across all metals.</div>
-          <div class="process-count">6 items · EWTh-2, EWP, EWLa-1.5, ER70S-2, ER308L, ER4043</div>
+          <div class="process-desc">${t('Precision welding with non-consumable tungsten electrode. Cleanest welds across all metals.','ריתוך מדויק עם אלקטרודת טונגסטן. ריתוכים הנקיים ביותר בכל סוגי המתכות.')}</div>
+          <div class="process-count">6 ${t('items','פריטים')} · EWTh-2, EWP, EWLa-1.5, ER70S-2, ER308L, ER4043</div>
         </div>
         <div class="process-card pc-fcaw" onclick="eGoProcess('FCAW')">
           <span class="process-icon">🏭</span>
           <div class="process-label">FCAW</div>
           <div class="process-full">Flux-Cored Arc Welding</div>
-          <div class="process-desc">High-deposition flux-cored wire. Self-shielded or gas-shielded for structural and outdoor work.</div>
-          <div class="process-count">5 wires · E71T-1C, E71T-8, E70T-5, E308LT1-1, E71T-GS</div>
+          <div class="process-desc">${t('High-deposition flux-cored wire. Self-shielded or gas-shielded for structural and outdoor work.','תיל ליבה עם ניתוך גבוה. עצמאי-מגן או גז-מגן לעבודות קונסטרוקציה וחוץ.')}</div>
+          <div class="process-count">5 ${t('wires','תילים')} · E71T-1C, E71T-8, E70T-5, E308LT1-1, E71T-GS</div>
         </div>
       </div>
     </div>
@@ -109,7 +109,7 @@ render() {
     <!-- PROCESS SEARCH PAGE -->
     <div id="e-page-process" style="display:none;">
       <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;flex-wrap:wrap;">
-        <button class="btn btn-ghost btn-sm" onclick="eGoHome()">← Back</button>
+        <button class="btn btn-ghost btn-sm" onclick="eGoHome()">← ${t('Back','חזרה')}</button>
         <div>
           <div class="page-title" id="e-process-title" style="font-size:clamp(20px,3vw,32px);margin-bottom:2px;"></div>
           <div class="page-sub" id="e-process-sub"></div>
@@ -123,26 +123,26 @@ render() {
             oninput="eShowSuggestions(this.value)" onfocus="eShowSuggestions(this.value)" />
           <div id="e-search-suggestions"></div>
         </div>
-        <button class="btn btn-primary" onclick="eDoSearch()">Search</button>
-        <button class="btn btn-ghost" onclick="eClearResults()">✕ Clear</button>
-        <button class="btn-compare-toggle" id="e-compare-toggle-btn" onclick="eToggleCompareMode()">⊕ Compare</button>
+        <button class="btn btn-primary" onclick="eDoSearch()">${t('Search','חיפוש')}</button>
+        <button class="btn btn-ghost" onclick="eClearResults()">✕ ${t('Clear','נקה')}</button>
+        <button class="btn-compare-toggle" id="e-compare-toggle-btn" onclick="eToggleCompareMode()">⊕ ${t('Compare','השוואה')}</button>
       </div>
 
       <div class="quick-tags" id="e-quick-tags"></div>
 
       <div id="e-compare-bar">
-        <span class="compare-label">⊕ Queue</span>
+        <span class="compare-label">⊕ ${t('Queue','תור')}</span>
         <div class="compare-items" id="e-compare-items"></div>
-        <button class="btn-run-compare" onclick="eRunCompare()">Compare Now</button>
-        <button class="btn-clear-compare" onclick="eClearCompare()">Clear</button>
+        <button class="btn-run-compare" onclick="eRunCompare()">${t('Compare Now','השווה עכשיו')}</button>
+        <button class="btn-clear-compare" onclick="eClearCompare()">${t('Clear','נקה')}</button>
       </div>
 
       <div id="e-results">
-        <div class="empty-state"><div class="big">—</div><p>Search an electrode or click a quick tag above.</p></div>
+        <div class="empty-state"><div class="big">—</div><p>${t('Search an electrode or click a quick tag above.','חפש אלקטרודה או לחץ על תג מהיר למעלה.')}</p></div>
       </div>
     </div>
 
-    <div class="module-footer">WeldRef — Reference based on AWS A5.1 / A5.5 / A5.18 / A5.9 / A5.10 / A5.20 / A5.22. Always verify with manufacturer datasheets.</div>
+    <div class="module-footer">WeldRef — ${t('Reference based on AWS A5.1 / A5.5 / A5.18 / A5.9 / A5.10 / A5.20 / A5.22. Always verify with manufacturer datasheets.','מאגר מבוסס על AWS A5.1 / A5.5 / A5.18 / A5.9 / A5.10 / A5.20 / A5.22. יש לאמת תמיד מול גיליונות נתוני היצרן.')}</div>
   </div>`;
 
   this.init();
@@ -184,19 +184,19 @@ goProcess(proc) {
   document.getElementById('e-process-sub').textContent = meta.sub;
   const db = this.DB[proc];
   document.getElementById('e-quick-tags').innerHTML =
-    '<span class="quick-label">Quick:</span>' +
+    `<span class="quick-label">${t('Quick:','מהיר:')}</span>` +
     Object.keys(db).map(k => `<span class="tag" onclick="eQuickSearch('${k}')">${db[k].name}</span>`).join('');
   this.resetResults();
   document.getElementById('e-compare-bar').classList.remove('visible');
   const btn = document.getElementById('e-compare-toggle-btn');
-  if (btn) { btn.classList.remove('active'); btn.textContent = '⊕ Compare'; }
+  if (btn) { btn.classList.remove('active'); btn.textContent = `⊕ ${t('Compare','השוואה')}`; }
 },
 
 resetResults() {
   const inp = document.getElementById('e-search-input');
   if (inp) inp.value = '';
   document.getElementById('e-results').innerHTML =
-    '<div class="empty-state"><div class="big">—</div><p>Search an electrode or click a quick tag above.</p></div>';
+    `<div class="empty-state"><div class="big">—</div><p>${t('Search an electrode or click a quick tag above.','חפש אלקטרודה או לחץ על תג מהיר למעלה.')}</p></div>`;
 },
 
 // ── SEARCH ────────────────────────────────
@@ -284,7 +284,7 @@ clearResults() {
   const bar = document.getElementById('e-compare-bar');
   if (bar) bar.classList.remove('visible');
   const btn = document.getElementById('e-compare-toggle-btn');
-  if (btn) { btn.classList.remove('active'); btn.textContent = '⊕ Compare'; }
+  if (btn) { btn.classList.remove('active'); btn.textContent = `⊕ ${t('Compare','השוואה')}`; }
   this.resetResults();
   this.updateAddButtons();
 },
@@ -295,7 +295,7 @@ toggleCompareMode() {
   const btn = document.getElementById('e-compare-toggle-btn');
   if (btn) {
     btn.classList.toggle('active', this.compareMode);
-    btn.textContent = this.compareMode ? '✕ Cancel' : '⊕ Compare';
+    btn.textContent = this.compareMode ? `✕ ${t('Cancel','ביטול')}` : `⊕ ${t('Compare','השוואה')}`;
   }
   if (!this.compareMode) this.clearCompare();
 },
@@ -306,7 +306,7 @@ addToCompare(id, proc) {
   }
   const gid = `${proc}:${id}`;
   if (this.compareList.some(x => x.globalId === gid)) { this.removeFromCompare(gid); return; }
-  if (this.compareList.length >= 4) { alert('Max 4 electrodes.'); return; }
+  if (this.compareList.length >= 4) { alert(t('Max 4 electrodes.','מקסימום 4 אלקטרודות.')); return; }
   this.compareList.push({globalId: gid, id, proc});
   this.renderCompareBar();
   this.updateAddButtons();
@@ -336,19 +336,19 @@ updateAddButtons() {
     const gid = `${btn.dataset.proc}:${btn.dataset.id}`;
     const added = this.compareList.some(x => x.globalId === gid);
     btn.classList.toggle('added', added);
-    btn.textContent = added ? '✓ Added' : '⊕ Add to Compare';
+    btn.textContent = added ? `✓ ${t('Added','נוסף')}` : `⊕ ${t('Add to Compare','הוסף להשוואה')}`;
   });
 },
 
 runCompare() {
-  if (this.compareList.length < 2) { alert('Add at least 2 to compare.'); return; }
+  if (this.compareList.length < 2) { alert(t('Add at least 2 to compare.','הוסף לפחות 2 להשוואה.')); return; }
   this.renderCompareView(this.compareList.map(x => this.DB[x.proc][x.id]).filter(Boolean));
 },
 
 // ── RENDER SINGLE CARD ────────────────────
 chemTable(e) {
   return `<table>
-    <thead><tr><th>El.</th><th>Full Name</th><th>Composition</th></tr></thead>
+    <thead><tr><th>${t('El.','סמל')}</th><th>${t('Full Name','שם מלא')}</th><th>${t('Composition','הרכב')}</th></tr></thead>
     <tbody>${e.chem.map(c=>`<tr>
       <td class="mono">${c.el}</td>
       <td class="el-name">${this.EL[c.el]||c.el}</td>
@@ -360,11 +360,11 @@ chemTable(e) {
 ampTableHTML(e) {
   if (!e.ampTable) return '';
   if (e.ampType==='dual') return `<table>
-    <thead><tr><th>Dia (in)</th><th>Dia (mm)</th><th>Flat/Horiz</th><th>Vert/OH</th></tr></thead>
+    <thead><tr><th>Dia (in)</th><th>Dia (mm)</th><th>${t('Flat/Horiz','שטוח/אופקי')}</th><th>${t('Vert/OH','אנכי/עיל-ראש')}</th></tr></thead>
     <tbody>${e.ampTable.map(r=>`<tr><td class="mono">${r.dia_in}</td><td>${r.dia_mm}</td><td class="mono">${r.amp_fh}</td><td class="mono">${r.amp_vo}</td></tr>`).join('')}</tbody>
   </table>`;
   return `<table>
-    <thead><tr><th>Diameter</th><th>Dia (mm)</th><th>Amperage</th></tr></thead>
+    <thead><tr><th>${t('Diameter','קוטר')}</th><th>Dia (mm)</th><th>${t('Amperage','אמפרים')}</th></tr></thead>
     <tbody>${e.ampTable.map(r=>`<tr><td class="mono">${r.dia_in}</td><td>${r.dia_mm}</td><td class="mono">${r.amp}</td></tr>`).join('')}</tbody>
   </table>`;
 },
@@ -372,7 +372,7 @@ ampTableHTML(e) {
 wireTable(e) {
   if (!e.wireGauge) return '';
   return `<table>
-    <thead><tr><th>Wire Gauge</th><th>Amperage Range</th></tr></thead>
+    <thead><tr><th>${t('Wire Gauge','עובי תיל')}</th><th>${t('Amperage Range','טווח אמפרים')}</th></tr></thead>
     <tbody>${e.wireGauge.map(r=>`<tr><td class="mono">${r.gauge}</td><td class="mono">${r.amp}</td></tr>`).join('')}</tbody>
   </table>`;
 },
@@ -382,14 +382,14 @@ renderSingleCard(e) {
   const added = this.compareList.some(x => x.globalId === gid);
   const badges = e.badges.map(b=>`<span class="badge badge-${b.type}">${b.label}</span>`).join('');
   const leftTable = e.ampTable
-    ? `<div class="table-block"><div class="table-title">Amperage Reference</div>${this.ampTableHTML(e)}</div>`
+    ? `<div class="table-block"><div class="table-title">${t('Amperage Reference','טבלת אמפרים')}</div>${this.ampTableHTML(e)}</div>`
     : e.wireGauge
-    ? `<div class="table-block"><div class="table-title">Wire Gauge / Amperage</div>${this.wireTable(e)}</div>`
+    ? `<div class="table-block"><div class="table-title">${t('Wire Gauge / Amperage','עובי תיל / אמפרים')}</div>${this.wireTable(e)}</div>`
     : '';
   const extraRows = [
-    e.shieldingGas ? `<li><strong>Shielding Gas:</strong> ${e.shieldingGas}</li>` : '',
-    e.fillerRod    ? `<li><strong>Filler Rod:</strong> ${e.fillerRod}</li>` : '',
-    e.tipPrep      ? `<li><strong>Tip Prep:</strong> ${e.tipPrep}</li>` : ''
+    e.shieldingGas ? `<li><strong>${t('Shielding Gas','גז מגן')}:</strong> ${e.shieldingGas}</li>` : '',
+    e.fillerRod    ? `<li><strong>${t('Filler Rod','תיל מילוי')}:</strong> ${e.fillerRod}</li>` : '',
+    e.tipPrep      ? `<li><strong>${t('Tip Prep','הכנת אלקטרודה')}:</strong> ${e.tipPrep}</li>` : ''
   ].join('');
 
   document.getElementById('e-results').innerHTML = `
@@ -402,41 +402,41 @@ renderSingleCard(e) {
       </div>
       <button class="btn-add-compare ${added?'added':''}" data-id="${e.id}" data-proc="${e.process}"
         onclick="eAddToCompare('${e.id}','${e.process}')">
-        ${added?'✓ Added':'⊕ Add to Compare'}
+        ${added?`✓ ${t('Added','נוסף')}`:`⊕ ${t('Add to Compare','הוסף להשוואה')}`}
       </button>
     </div>
     <div class="card-body">
       <div class="info-grid">
-        <div class="info-block"><div class="info-block-label">Strengths</div><ul>${e.strengths.map(s=>`<li>${s}</li>`).join('')}</ul></div>
-        <div class="info-block"><div class="info-block-label">Drawbacks</div><ul>${e.drawbacks.map(s=>`<li>${s}</li>`).join('')}</ul></div>
-        <div class="info-block"><div class="info-block-label">Common Uses</div><ul>${e.uses.map(s=>`<li>${s}</li>`).join('')}</ul></div>
+        <div class="info-block"><div class="info-block-label">${t('Strengths','יתרונות')}</div><ul>${e.strengths.map(s=>`<li>${s}</li>`).join('')}</ul></div>
+        <div class="info-block"><div class="info-block-label">${t('Drawbacks','חסרונות')}</div><ul>${e.drawbacks.map(s=>`<li>${s}</li>`).join('')}</ul></div>
+        <div class="info-block"><div class="info-block-label">${t('Common Uses','שימושים נפוצים')}</div><ul>${e.uses.map(s=>`<li>${s}</li>`).join('')}</ul></div>
       </div>
-      <div class="section-divider"><span>Technical Specs</span></div>
+      <div class="section-divider"><span>${t('Technical Specs','מפרט טכני')}</span></div>
       <div class="info-grid">
-        <div class="info-block"><div class="info-block-label">Process & Current</div><ul>
-          <li><strong>Type:</strong> ${e.type}</li>
-          <li><strong>Current:</strong> ${e.current}</li>
-          <li><strong>Positions:</strong> ${e.positions}</li>
-          <li><strong>Arc:</strong> ${e.arcType}</li>
+        <div class="info-block"><div class="info-block-label">${t('Process & Current','תהליך וזרם')}</div><ul>
+          <li><strong>${t('Type','סוג')}:</strong> ${e.type}</li>
+          <li><strong>${t('Current','זרם')}:</strong> ${e.current}</li>
+          <li><strong>${t('Positions','מצב')}:</strong> ${e.positions}</li>
+          <li><strong>${t('Arc','קשת')}:</strong> ${e.arcType}</li>
           ${extraRows}
         </ul></div>
-        <div class="info-block"><div class="info-block-label">Weld Quality</div><ul>
-          <li><strong>Penetration:</strong> ${e.penetration}</li>
-          <li><strong>Spatter:</strong> ${e.spatter}</li>
-          <li><strong>Slag:</strong> ${e.slag}</li>
-          <li><strong>Appearance:</strong> ${e.weldAppearance}</li>
+        <div class="info-block"><div class="info-block-label">${t('Weld Quality','איכות ריתוך')}</div><ul>
+          <li><strong>${t('Penetration','חדירה')}:</strong> ${e.penetration}</li>
+          <li><strong>${t('Spatter','ניתז')}:</strong> ${e.spatter}</li>
+          <li><strong>${t('Slag','סיגים')}:</strong> ${e.slag}</li>
+          <li><strong>${t('Appearance','מראה')}:</strong> ${e.weldAppearance}</li>
         </ul></div>
-        <div class="info-block"><div class="info-block-label">Material & Storage</div><ul>
-          <li><strong>Tensile:</strong> ${e.tensile}</li>
-          <li><strong>Hydrogen:</strong> ${e.hydrogenContent}</li>
-          <li><strong>Contamination:</strong> ${e.burnContamination}</li>
-          <li><strong>Skill Level:</strong> ${e.skillLevel}</li>
+        <div class="info-block"><div class="info-block-label">${t('Material & Storage','חומר ואחסון')}</div><ul>
+          <li><strong>${t('Tensile','חוזק משיכה')}:</strong> ${e.tensile}</li>
+          <li><strong>${t('Hydrogen','מימן')}:</strong> ${e.hydrogenContent}</li>
+          <li><strong>${t('Contamination','זיהום')}:</strong> ${e.burnContamination}</li>
+          <li><strong>${t('Skill Level','רמת מיומנות')}:</strong> ${e.skillLevel}</li>
         </ul></div>
       </div>
-      <div class="section-divider"><span>Amperage & Chemical Composition</span></div>
+      <div class="section-divider"><span>${t('Amperage & Chemical Composition','אמפרים והרכב כימי')}</span></div>
       <div class="tables-row">
         ${leftTable}
-        <div class="table-block"><div class="table-title">Chemical Composition</div>${this.chemTable(e)}</div>
+        <div class="table-block"><div class="table-title">${t('Chemical Composition','הרכב כימי')}</div>${this.chemTable(e)}</div>
       </div>
     </div>
   </div>`;
@@ -446,22 +446,22 @@ renderSingleCard(e) {
 renderCompareView(electrodes) {
   const hdr = electrodes.map(e=>`<th class="elec-col">${e.name}<br><span style="font-size:9px;opacity:0.6;font-weight:400;">${e.process}</span></th>`).join('');
   const rows = [
-    {label:'Process',         fn:e=>e.process},
-    {label:'Type / Coating',  fn:e=>e.type},
-    {label:'Tensile Strength',fn:e=>e.tensile},
-    {label:'Welding Current', fn:e=>e.current},
-    {label:'AC Compatible',   fn:e=>e.acCompatible?'✓ Yes':'✗ No'},
-    {label:'Positions',       fn:e=>e.positions},
-    {label:'Arc Properties',  fn:e=>e.arcType},
-    {label:'Penetration',     fn:e=>e.penetration},
-    {label:'Spatter',         fn:e=>e.spatter},
-    {label:'Slag',            fn:e=>e.slag},
-    {label:'Weld Appearance', fn:e=>e.weldAppearance},
-    {label:'Hydrogen Content',fn:e=>e.hydrogenContent},
-    {label:'Contamination',   fn:e=>e.burnContamination},
-    {label:'Shielding Gas',   fn:e=>e.shieldingGas||'—'},
-    {label:'Skill Level',     fn:e=>e.skillLevel},
-    {label:'Best For',        fn:e=>e.uses.slice(0,3).join('; ')},
+    {label:t('Process','תהליך'),           fn:e=>e.process},
+    {label:t('Type / Coating','סוג / ציפוי'), fn:e=>e.type},
+    {label:t('Tensile Strength','חוזק משיכה'), fn:e=>e.tensile},
+    {label:t('Welding Current','זרם ריתוך'),  fn:e=>e.current},
+    {label:t('AC Compatible','תואם AC'),     fn:e=>e.acCompatible?'✓ Yes':'✗ No'},
+    {label:t('Positions','מצב'),             fn:e=>e.positions},
+    {label:t('Arc Properties','תכונות קשת'), fn:e=>e.arcType},
+    {label:t('Penetration','חדירה'),          fn:e=>e.penetration},
+    {label:t('Spatter','ניתז'),               fn:e=>e.spatter},
+    {label:t('Slag','סיגים'),                fn:e=>e.slag},
+    {label:t('Weld Appearance','מראה ריתוך'), fn:e=>e.weldAppearance},
+    {label:t('Hydrogen Content','תכולת מימן'), fn:e=>e.hydrogenContent},
+    {label:t('Contamination','זיהום'),        fn:e=>e.burnContamination},
+    {label:t('Shielding Gas','גז מגן'),       fn:e=>e.shieldingGas||'—'},
+    {label:t('Skill Level','רמת מיומנות'),    fn:e=>e.skillLevel},
+    {label:t('Best For','מתאים ל'),           fn:e=>e.uses.slice(0,3).join('; ')},
   ].map(r=>`<tr><td class="row-label">${r.label}</td>${electrodes.map(e=>`<td>${r.fn(e)}</td>`).join('')}</tr>`).join('');
 
   const allEls = [...new Set(electrodes.flatMap(e=>e.chem.map(c=>c.el)))];
@@ -473,19 +473,19 @@ renderCompareView(electrodes) {
   document.getElementById('e-results').innerHTML = `
   <div class="compare-view">
     <div class="compare-view-header">
-      <h2>⊗ Comparison</h2>
+      <h2>⊗ ${t('Comparison','השוואה')}</h2>
       <span style="color:var(--muted);font-size:11px;margin-left:8px;">${electrodes.map(e=>e.name).join(' vs ')}</span>
     </div>
     <div class="compare-table-wrap">
       <table class="compare-table">
-        <thead><tr><th class="row-label">Property</th>${hdr}</tr></thead>
+        <thead><tr><th class="row-label">${t('Property','מאפיין')}</th>${hdr}</tr></thead>
         <tbody>${rows}</tbody>
       </table>
     </div>
-    <div style="padding:0 22px;"><div class="section-divider"><span>Chemical Composition</span></div></div>
+    <div style="padding:0 22px;"><div class="section-divider"><span>${t('Chemical Composition','הרכב כימי')}</span></div></div>
     <div class="compare-table-wrap" style="padding-bottom:22px;">
       <table class="compare-table">
-        <thead><tr><th class="row-label">Element</th>${hdr}</tr></thead>
+        <thead><tr><th class="row-label">${t('Element','יסוד')}</th>${hdr}</tr></thead>
         <tbody>${chemRows}</tbody>
       </table>
     </div>
@@ -502,8 +502,8 @@ renderCompareView(electrodes) {
           </div>
         </div>
         <div class="card-body" style="padding:13px 18px;">
-          <div class="info-block" style="margin-bottom:10px;"><div class="info-block-label">Top Strengths</div><ul>${e.strengths.slice(0,3).map(s=>`<li>${s}</li>`).join('')}</ul></div>
-          <div class="info-block"><div class="info-block-label">Key Drawbacks</div><ul>${e.drawbacks.slice(0,3).map(s=>`<li>${s}</li>`).join('')}</ul></div>
+          <div class="info-block" style="margin-bottom:10px;"><div class="info-block-label">${t('Top Strengths','יתרונות מרכזיים')}</div><ul>${e.strengths.slice(0,3).map(s=>`<li>${s}</li>`).join('')}</ul></div>
+          <div class="info-block"><div class="info-block-label">${t('Key Drawbacks','חסרונות מרכזיים')}</div><ul>${e.drawbacks.slice(0,3).map(s=>`<li>${s}</li>`).join('')}</ul></div>
         </div>
       </div>`;
     }).join('')}
@@ -515,8 +515,8 @@ renderNotFound(raw) {
   const avail = Object.keys(db).map(k=>`<span class="tag" onclick="eQuickSearch('${k}')">${db[k].name}</span>`).join(' ');
   document.getElementById('e-results').innerHTML = `
   <div class="error-msg">
-    <strong>No data found for "${raw.toUpperCase()}"</strong>
-    <div style="margin-top:10px;font-size:13px;">Available in this process:<br>
+    <strong>${t('No data found for','לא נמצאו נתונים עבור')} "${raw.toUpperCase()}"</strong>
+    <div style="margin-top:10px;font-size:13px;">${t('Available in this process:','זמין בתהליך זה:')}<br>
       <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;">${avail}</div>
     </div>
   </div>`;

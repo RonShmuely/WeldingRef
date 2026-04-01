@@ -5,13 +5,17 @@
 
 const ChecklistModule = {
 
-  ITEMS: [
-    { id: 'batteries',  label: 'Charge Batteries',          icon: '🔋', note: 'All battery-powered tools on charge' },
-    { id: 'cart',       label: 'Fold & Organize Welding Cart', icon: '🛒', note: 'Cart folded, cables coiled, in position' },
-    { id: 'machines',   label: 'Organize Welding Machines',  icon: '⚙️',  note: 'Machines stored, cables stowed' },
-    { id: 'generator',  label: 'Close Generator Switch 24',  icon: '⚡',  note: 'Verify switch 24 is OFF' },
-    { id: 'oven',       label: 'Fill Electrode Drying Oven', icon: '🔥',  note: 'Restock oven with 7018 / 8018 for tomorrow' },
-  ],
+  ITEM_IDS: ['batteries','cart','machines','generator','oven'],
+
+  getItems() {
+    return [
+      { id: 'batteries',  label: t('Charge Batteries',             'טען סוללות'),              icon: '🔋', note: t('All battery-powered tools on charge',   'כל הכלים על טעינה') },
+      { id: 'cart',       label: t('Fold & Organize Welding Cart', 'קפל וסדר עגלת ריתוך'),     icon: '🛒', note: t('Cart folded, cables coiled, in position', 'עגלה קפולה, כבלים מגולגלים, במיקום') },
+      { id: 'machines',   label: t('Organize Welding Machines',    'סדר מכונות ריתוך'),        icon: '⚙️',  note: t('Machines stored, cables stowed',          'מכונות מאוחסנות, כבלים מסודרים') },
+      { id: 'generator',  label: t('Close Generator Switch 24',   'סגור מתג גנרטור 24'),      icon: '⚡',  note: t('Verify switch 24 is OFF',                 'וודא שמתג 24 כבוי') },
+      { id: 'oven',       label: t('Fill Electrode Drying Oven',  'מלא תנור ייבוש אלקטרודות'), icon: '🔥',  note: t('Restock oven with 7018 / 8018 for tomorrow', 'מלא תנור ב-7018 / 8018 למחר') },
+    ];
+  },
 
   getTodayKey() {
     return 'checklist_' + new Date().toISOString().slice(0, 10);
@@ -35,8 +39,9 @@ const ChecklistModule = {
 
   getSummary() {
     const state = this.getState();
-    const done = this.ITEMS.filter(i => state[i.id]).length;
-    return { done, total: this.ITEMS.length, percent: Math.round((done / this.ITEMS.length) * 100) };
+    const items = this.getItems();
+    const done = items.filter(i => state[i.id]).length;
+    return { done, total: items.length, percent: Math.round((done / items.length) * 100) };
   },
 
   updateUI(state) {
@@ -45,10 +50,10 @@ const ChecklistModule = {
     const bar = document.getElementById('cl-progress-fill');
     const lbl = document.getElementById('cl-progress-label');
     if (bar) bar.style.width = summary.percent + '%';
-    if (lbl) lbl.textContent = `${summary.done} / ${this.ITEMS.length} complete`;
+    if (lbl) lbl.textContent = `${summary.done} / ${this.getItems().length} ${t('complete', 'הושלמו')}`;
 
     // Update each item
-    this.ITEMS.forEach(item => {
+    this.getItems().forEach(item => {
       const el = document.getElementById(`cl-item-${item.id}`);
       const box = document.getElementById(`cl-box-${item.id}`);
       if (!el || !box) return;
@@ -66,8 +71,8 @@ const ChecklistModule = {
     document.getElementById('main-content').innerHTML = `
     <div class="checklist-wrap fade-up">
       <div class="page-header">
-        <div class="page-title">End-of-Day <span>Checklist</span></div>
-        <div class="page-sub">Resets automatically at midnight · State saved locally</div>
+        <div class="page-title">${t('End-of-Day', 'סוף יום')} <span>${t('Checklist', 'רשימת סיום')}</span></div>
+        <div class="page-sub">${t('Resets automatically at midnight · State saved locally', 'מתאפס אוטומטית בחצות · מצב נשמר מקומית')}</div>
       </div>
 
       <div class="checklist-date">${today}</div>
@@ -76,11 +81,11 @@ const ChecklistModule = {
         <div class="progress-bar" style="flex:1;">
           <div class="progress-fill" id="cl-progress-fill" style="width:${summary.percent}%"></div>
         </div>
-        <span class="checklist-progress-label" id="cl-progress-label">${summary.done} / ${this.ITEMS.length} complete</span>
+        <span class="checklist-progress-label" id="cl-progress-label">${summary.done} / ${this.getItems().length} ${t('complete', 'הושלמו')}</span>
       </div>
 
       <div id="cl-items">
-        ${this.ITEMS.map(item => `
+        ${this.getItems().map(item => `
           <div class="checklist-item ${state[item.id] ? 'done' : ''}" id="cl-item-${item.id}"
                onclick="ChecklistModule.toggle('${item.id}')">
             <div class="checklist-checkbox" id="cl-box-${item.id}">${state[item.id] ? '✓' : ''}</div>
@@ -93,22 +98,22 @@ const ChecklistModule = {
         `).join('')}
       </div>
 
-      ${summary.done === this.ITEMS.length ? `
+      ${summary.done === this.getItems().length ? `
         <div class="success-msg" style="margin-top:20px;text-align:center;font-size:15px;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;font-weight:700;">
-          ✓ All done — great shift! See you tomorrow.
+          ✓ ${t('All done — great shift! See you tomorrow.', 'הכל בוצע — משמרת מעולה! להתראות מחר.')}
         </div>
       ` : ''}
 
       <div style="margin-top:20px;">
-        <button class="btn btn-ghost btn-sm" onclick="ChecklistModule.resetToday()">Reset Today</button>
+        <button class="btn btn-ghost btn-sm" onclick="ChecklistModule.resetToday()">${t('Reset Today', 'אפס היום')}</button>
       </div>
 
-      <div class="module-footer">Checklist resets automatically each day at midnight.</div>
+      <div class="module-footer">${t('Checklist resets automatically each day at midnight.', 'רשימת הסיום מתאפסת אוטומטית בכל יום בחצות.')}</div>
     </div>`;
   },
 
   resetToday() {
-    if (!confirm('Reset all checklist items for today?')) return;
+    if (!confirm(t('Reset all checklist items for today?', 'לאפס את כל פריטי הרשימה להיום?'))) return;
     localStorage.removeItem(this.getTodayKey());
     this.render();
   }

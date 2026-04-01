@@ -23,37 +23,37 @@
     </div>
 
     <nav class="sidebar-nav">
-      <div class="nav-section-label">Reference</div>
+      <div class="nav-section-label" id="nav-sec-reference">Reference</div>
       <a class="nav-item" data-module="electrodes" onclick="navigate('electrodes')">
-        <span class="nav-icon">🔥</span><span class="nav-label">Electrodes</span>
+        <span class="nav-icon">🔥</span><span class="nav-label" id="nav-electrodes">Electrodes</span>
       </a>
       <a class="nav-item" data-module="compare" onclick="navigate('compare')">
-        <span class="nav-icon">⊗</span><span class="nav-label">Compare</span>
+        <span class="nav-icon">⊗</span><span class="nav-label" id="nav-compare">Compare</span>
       </a>
       <a class="nav-item" data-module="machines" onclick="navigate('machines')">
-        <span class="nav-icon">⚙</span><span class="nav-label">Machines</span>
+        <span class="nav-icon">⚙</span><span class="nav-label" id="nav-machines">Machines</span>
       </a>
       <a class="nav-item" data-module="metals" onclick="navigate('metals')">
-        <span class="nav-icon">🔩</span><span class="nav-label">Metal Types</span>
+        <span class="nav-icon">🔩</span><span class="nav-label" id="nav-metals">Metal Types</span>
       </a>
       <a class="nav-item" data-module="settings" onclick="navigate('settings')">
-        <span class="nav-icon">⚡</span><span class="nav-label">Weld Settings</span>
+        <span class="nav-icon">⚡</span><span class="nav-label" id="nav-settings">Weld Settings</span>
       </a>
 
-      <div class="nav-section-label">Daily Tools</div>
+      <div class="nav-section-label" id="nav-sec-daily">Daily Tools</div>
       <a class="nav-item" data-module="tip" onclick="navigate('tip')">
-        <span class="nav-icon">💡</span><span class="nav-label">Daily Tip</span>
+        <span class="nav-icon">💡</span><span class="nav-label" id="nav-tip">Daily Tip</span>
       </a>
       <a class="nav-item" data-module="hplus" onclick="navigate('hplus')">
-        <span class="nav-icon">🛢</span><span class="nav-label">H-Plus</span>
+        <span class="nav-icon">🧠</span><span class="nav-label" id="nav-hplus">H-Plus</span>
       </a>
       <a class="nav-item" data-module="checklist" onclick="navigate('checklist')">
-        <span class="nav-icon">✅</span><span class="nav-label">Checklist</span>
+        <span class="nav-icon">✅</span><span class="nav-label" id="nav-checklist">Checklist</span>
       </a>
 
-      <div class="nav-section-label">Records</div>
+      <div class="nav-section-label" id="nav-sec-records">Records</div>
       <a class="nav-item" data-module="repairs" onclick="navigate('repairs')">
-        <span class="nav-icon">📋</span><span class="nav-label">Repairs</span>
+        <span class="nav-icon">📋</span><span class="nav-label" id="nav-repairs">Repairs</span>
       </a>
     </nav>
 
@@ -99,6 +99,14 @@
 
 <script>
 // ═══════════════════════════════════════════════════════════
+// BILINGUAL HELPER
+// ═══════════════════════════════════════════════════════════
+
+function t(en, he) {
+  return currentLang === 'he' ? he : en;
+}
+
+// ═══════════════════════════════════════════════════════════
 // ROUTER
 // ═══════════════════════════════════════════════════════════
 
@@ -114,18 +122,21 @@ const MODULE_MAP = {
   repairs:    RepairsModule,
 };
 
-const MODULE_TITLES = {
-  home:       'WeldRef',
-  electrodes: 'Electrodes',
-  compare:    'Compare',
-  machines:   'Machines',
-  metals:     'Metal Types',
-  settings:   'Weld Settings',
-  tip:        'Daily Tip',
-  hplus:      'H-Plus',
-  checklist:  'Checklist',
-  repairs:    'Repair Log',
-};
+function getModuleTitle(mod) {
+  const titles = {
+    home:       t('WeldRef',       'WeldRef'),
+    electrodes: t('Electrodes',    'אלקטרודות'),
+    compare:    t('Compare',       'השוואה'),
+    machines:   t('Machines',      'מכונות'),
+    metals:     t('Metal Types',   'סוגי מתכת'),
+    settings:   t('Weld Settings', 'הגדרות ריתוך'),
+    tip:        t('Daily Tip',     'טיפ יומי'),
+    hplus:      t('H-Plus',        'H-Plus'),
+    checklist:  t('Checklist',     'צ\'קליסט'),
+    repairs:    t('Repair Log',    'יומן תיקונים'),
+  };
+  return titles[mod] || 'WeldRef';
+}
 
 let currentModule = 'home';
 
@@ -133,7 +144,7 @@ function navigate(mod) {
   document.querySelectorAll('.nav-item').forEach(el => {
     el.classList.toggle('active', el.dataset.module === mod);
   });
-  document.getElementById('topbar-title').textContent = MODULE_TITLES[mod] || 'WeldRef';
+  document.getElementById('topbar-title').textContent = getModuleTitle(mod);
   currentModule = mod;
 
   if (window.innerWidth < 768) closeSidebar();
@@ -143,6 +154,31 @@ function navigate(mod) {
   } else {
     MODULE_MAP[mod].render();
   }
+}
+
+// ═══════════════════════════════════════════════════════════
+// NAV LABEL TRANSLATION
+// ═══════════════════════════════════════════════════════════
+
+function updateNavLabels() {
+  const labels = {
+    'nav-electrodes': t('Electrodes',   'אלקטרודות'),
+    'nav-compare':    t('Compare',      'השוואה'),
+    'nav-machines':   t('Machines',     'מכונות'),
+    'nav-metals':     t('Metal Types',  'סוגי מתכת'),
+    'nav-settings':   t('Weld Settings','הגדרות ריתוך'),
+    'nav-tip':        t('Daily Tip',    'טיפ יומי'),
+    'nav-hplus':      t('H-Plus',       'H-Plus'),
+    'nav-checklist':  t('Checklist',    'צ\'קליסט'),
+    'nav-repairs':    t('Repairs',      'תיקונים'),
+    'nav-sec-reference': t('Reference', 'עיון'),
+    'nav-sec-daily':     t('Daily Tools','כלים יומיים'),
+    'nav-sec-records':   t('Records',   'רשומות'),
+  };
+  Object.entries(labels).forEach(([id, text]) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  });
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -163,7 +199,7 @@ function renderHome() {
   <div class="home-page fade-up">
     <div class="home-header">
       <div class="home-brand">
-        <span class="logo-tag">⚡ Welding Reference</span>
+        <span class="logo-tag">⚡ ${t('Welding Reference','עיון בריתוך')}</span>
         <h1>Weld<span>Ref</span></h1>
         <p class="home-date">${currentLang === 'he' ? todayHe : today}</p>
       </div>
@@ -171,11 +207,11 @@ function renderHome() {
 
     <div class="home-grid">
       <div class="home-card tip-card" onclick="navigate('tip')">
-        <div class="home-card-label">💡 ${currentLang === 'he' ? 'טיפ יומי' : 'Daily Tip'}</div>
+        <div class="home-card-label">💡 ${t('Daily Tip','טיפ יומי')}</div>
         <div class="home-card-content">${tip}</div>
       </div>
       <div class="home-card checklist-card" onclick="navigate('checklist')">
-        <div class="home-card-label">✅ ${currentLang === 'he' ? 'צ\'קליסט סוף יום' : 'End-of-Day Checklist'}</div>
+        <div class="home-card-label">✅ ${t("End-of-Day Checklist","צ'קליסט סוף יום")}</div>
         <div class="home-card-content">
           <div class="checklist-mini-progress">
             <div class="progress-bar">
@@ -185,45 +221,45 @@ function renderHome() {
           </div>
           <div style="font-size:12px;color:var(--muted);margin-top:6px;">
             ${cl.done === cl.total
-              ? '<span style="color:var(--green);">✓ All done!</span>'
-              : `${cl.total - cl.done} item${(cl.total - cl.done) !== 1 ? 's' : ''} remaining`
+              ? `<span style="color:var(--green);">✓ ${t('All done!','הכל הושלם!')}</span>`
+              : `${cl.total - cl.done} ${t('item' + ((cl.total - cl.done) !== 1 ? 's' : '') + ' remaining', 'פריטים נותרו')}`
             }
           </div>
         </div>
       </div>
     </div>
 
-    <div class="quick-access-label">${currentLang === 'he' ? 'גישה מהירה' : 'Quick Access'}</div>
+    <div class="quick-access-label">${t('Quick Access','גישה מהירה')}</div>
     <div class="module-grid">
       <div class="module-card" onclick="navigate('electrodes')">
         <span class="module-icon">🔥</span>
-        <div class="module-name">${currentLang === 'he' ? 'אלקטרודות' : 'Electrodes'}</div>
+        <div class="module-name">${t('Electrodes','אלקטרודות')}</div>
         <div class="module-desc">SMAW · MIG · TIG · FCAW</div>
       </div>
       <div class="module-card" onclick="navigate('machines')">
         <span class="module-icon">⚙</span>
-        <div class="module-name">${currentLang === 'he' ? 'מכונות' : 'Machines'}</div>
+        <div class="module-name">${t('Machines','מכונות')}</div>
         <div class="module-desc">Helvi · Jasic · Kemppi · BTT</div>
       </div>
       <div class="module-card" onclick="navigate('settings')">
         <span class="module-icon">⚡</span>
-        <div class="module-name">${currentLang === 'he' ? 'הגדרות ריתוך' : 'Weld Settings'}</div>
-        <div class="module-desc">Amps · Hot Start · Arc Force</div>
+        <div class="module-name">${t('Weld Settings','הגדרות ריתוך')}</div>
+        <div class="module-desc">${t('Amps · Hot Start · Arc Force','אמפר · הדלקה · כוח קשת')}</div>
       </div>
       <div class="module-card" onclick="navigate('metals')">
         <span class="module-icon">🔩</span>
-        <div class="module-name">${currentLang === 'he' ? 'סוגי מתכת' : 'Metal Types'}</div>
-        <div class="module-desc">Wirtgen · Skid Loaders · Fab</div>
+        <div class="module-name">${t('Metal Types','סוגי מתכת')}</div>
+        <div class="module-desc">${t('Wirtgen · Skid Loaders · Fab','וירטגן · עגלות · מסגרייה')}</div>
       </div>
       <div class="module-card" onclick="navigate('hplus')">
-        <span class="module-icon">🛢</span>
+        <span class="module-icon">🧠</span>
         <div class="module-name">H-Plus</div>
-        <div class="module-desc">${currentLang === 'he' ? 'שמני הידראוליקה וויר' : 'Hydraulic Fluids · Wirtgen'}</div>
+        <div class="module-desc">${t('Human performance · Monroe','ביצועים אנושיים · מונרו')}</div>
       </div>
       <div class="module-card" onclick="navigate('repairs')">
         <span class="module-icon">📋</span>
-        <div class="module-name">${currentLang === 'he' ? 'יומן תיקונים' : 'Repair Log'}</div>
-        <div class="module-desc">${currentLang === 'he' ? 'מעקב ריתוכים' : 'Track your welds'}</div>
+        <div class="module-name">${t('Repair Log','יומן תיקונים')}</div>
+        <div class="module-desc">${t('Track your welds','מעקב ריתוכים')}</div>
       </div>
     </div>
   </div>`;
@@ -242,6 +278,7 @@ function toggleLang() {
   if (btn) btn.textContent = currentLang === 'en' ? '🇮🇱 עברית' : '🇬🇧 English';
   document.documentElement.lang = currentLang === 'he' ? 'he' : 'en';
   document.documentElement.dir  = currentLang === 'he' ? 'rtl' : 'ltr';
+  updateNavLabels();
   navigate(currentModule);
 }
 
@@ -271,6 +308,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Lang button label
   document.getElementById('lang-label').textContent =
     currentLang === 'en' ? '🇮🇱 עברית' : '🇬🇧 English';
+
+  // Set nav labels for current language
+  updateNavLabels();
 
   // Render home
   navigate('home');
