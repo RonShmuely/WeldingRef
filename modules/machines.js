@@ -23,8 +23,8 @@ const MachinesModule = {
       processes: ['SMAW', 'MIG', 'TIG'],
       notes: 'Primary MMA workhorse. Handles E6010–E8018. Inverter-based — check Hot Start / Arc Force settings for cellulosic rods. Also capable of MIG and Lift-TIG.',
       settings: {
-        hotStart: '20–40%',
-        arcForce: '15–30% (E7018) / 40–60% (E6010/E6011)',
+        hotStart: '20–40% (SMAW mode only)',
+        arcForce: '15–30% (E7018) · 40–60% (E6010/E6011) — SMAW mode only',
       }
     },
     {
@@ -68,7 +68,8 @@ const MachinesModule = {
       notes: 'Compact single-phase MIG for light to medium fabrication. Best with ER70S-6 at 0.8mm wire. Use 75/25 Ar/CO₂ gas mix. Excellent for thin sheet (1–5mm). 230V — runs on site socket.',
       settings: {
         wire: '0.8mm ER70S-6',
-        gas: '75% Ar / 25% CO₂ at 12–15 L/min',
+        gas:  '75% Ar / 25% CO₂ at 12–15 L/min',
+        note: 'MIG only — no Hot Start or Arc Force controls',
       }
     },
     {
@@ -89,9 +90,10 @@ const MachinesModule = {
       processes: ['MIG', 'SMAW'],
       notes: 'Versatile portable MIG/MMA combo unit. Good for field repairs where single-phase supply is available. Handles E6013, E7018 (up to 4mm dia) in MMA mode. MIG mode best for thin plate.',
       settings: {
-        wire: '0.8mm ER70S-6',
-        gas: '75% Ar / 25% CO₂ at 10–12 L/min',
-        hotStart: '10–25% (MMA mode)',
+        wire:     '0.8mm ER70S-6 (MIG mode)',
+        gas:      '75% Ar / 25% CO₂ at 10–12 L/min',
+        hotStart: '10–25% (SMAW mode only)',
+        note:     'No Arc Force adjustment on this unit',
       }
     },
     {
@@ -138,9 +140,10 @@ const MachinesModule = {
       processes: ['Plasma'],
       notes: 'Compressed-air plasma cutter for mild steel, stainless, and aluminum. Start cuts from the edge — avoid mid-plate piercing to preserve consumables. Ensure air supply is dry and filtered (moisture ruins torch tips). Clean cut height 1.5–2x nozzle diameter above work.',
       settings: {
-        pressure: '5.0 bar recommended',
+        pressure:      '5.0 bar recommended',
         cuttingHeight: '1.5–2.5mm above work surface',
-        speed: 'Reduce speed on thick material for clean cut face',
+        speed:         'Reduce on thick material for clean cut face',
+        note:          'Plasma — no Hot Start or Arc Force',
       }
     },
   ],
@@ -149,15 +152,15 @@ const MachinesModule = {
     document.getElementById('main-content').innerHTML = `
     <div class="fade-up" style="max-width:1060px;">
       <div class="page-header">
-        <div class="page-title">Machine <span>Reference</span></div>
-        <div class="page-sub">Specs, settings, and notes for your welding machines</div>
+        <div class="page-title">${t('Machine','מכונות')} <span>${t('Reference','עיון')}</span></div>
+        <div class="page-sub">${t('Specs, settings, and notes for your welding machines','מפרטים, הגדרות והערות למכונות הריתוך שלך')}</div>
       </div>
 
       <div class="machine-grid">
         ${this.DB.map(m => this.machineCard(m)).join('')}
       </div>
 
-      <div class="module-footer">Specs are reference values. Verify with machine manuals. Duty cycle varies with ambient temperature.</div>
+      <div class="module-footer">${t('Specs are reference values. Verify with machine manuals. Duty cycle varies with ambient temperature.','הערכים הם לעיון בלבד. אמת עם מדריכי המכונה. מחזור עבודה משתנה עם טמפרטורת הסביבה.')}</div>
     </div>`;
   },
 
@@ -168,10 +171,39 @@ const MachinesModule = {
       p==='SMAW'?'red': p==='MIG'?'blue': p==='TIG'?'teal': p==='Plasma'?'teal': 'green'
     }">${p}</span>`).join(' ');
 
+    const specLabelMap = {
+      'Input Voltage':          t('Input Voltage',           'מתח כניסה'),
+      'Input Current':          t('Input Current',           'זרם כניסה'),
+      'Welding Current':        t('Welding Current',         'זרם ריתוך'),
+      'Cutting Current':        t('Cutting Current',         'זרם חיתוך'),
+      'Duty Cycle':             t('Duty Cycle',              'מחזור עבודה'),
+      'OCV':                    t('OCV',                     'מתח פתיחה'),
+      'Weight':                 t('Weight',                  'משקל'),
+      'IP Rating':              t('IP Rating',               'דירוג IP'),
+      'Wire Diameter':          t('Wire Diameter',           'קוטר תיל'),
+      'Max Electrode':          t('Max Electrode',           'אלקטרודה מקסימלית'),
+      'Required Fuse':          t('Required Fuse',           'נתיך נדרש'),
+      'Generator':              t('Generator compatible',    'תאימות גנרטור'),
+      'Max Cut (mild steel)':   t('Max Cut (mild steel)',    'חיתוך מקסימלי (פלדה)'),
+      'Air Pressure':           t('Air Pressure',            'לחץ אוויר'),
+      'Air Flow':               t('Air Flow',                'ספיקת אוויר'),
+    };
+
+    const settingKeyMap = {
+      hotStart:      t('Hot Start',      'הדלקה חמה'),
+      arcForce:      t('Arc Force',      'כוח קשת'),
+      wire:          t('Wire',           'תיל'),
+      gas:           t('Gas',            'גז'),
+      pressure:      t('Pressure',       'לחץ'),
+      cuttingHeight: t('Cutting Height', 'גובה חיתוך'),
+      speed:         t('Speed',          'מהירות'),
+      note:          t('Note',           'הערה'),
+    };
+
     const settingRows = Object.entries(m.settings || {}).map(([k, v]) =>
       `<div class="machine-spec-row">
-        <span class="spec-label">${k.replace(/([A-Z])/g,' $1').trim()}</span>
-        <span class="spec-value" style="font-size:12px;font-family:'Barlow',sans-serif;">${v}</span>
+        <span class="spec-label">${settingKeyMap[k] || k.replace(/([A-Z])/g,' $1').trim()}</span>
+        <span class="spec-value" dir="ltr" style="font-size:12px;font-family:'Barlow',sans-serif;">${v}</span>
       </div>`
     ).join('');
 
@@ -188,20 +220,20 @@ const MachinesModule = {
       <div class="machine-card-body">
         ${m.specs.map(s => `
           <div class="machine-spec-row">
-            <span class="spec-label">${s.label}</span>
-            <span class="spec-value">${s.value}</span>
+            <span class="spec-label">${specLabelMap[s.label] || s.label}</span>
+            <span class="spec-value" dir="ltr">${s.value}</span>
           </div>
         `).join('')}
 
         ${m.settings ? `
           <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border);">
-            <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">Quick Settings</div>
+            <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">${t('Quick Settings','הגדרות מהירות')}</div>
             ${settingRows}
           </div>
         ` : ''}
 
         <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border);">
-          <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Notes</div>
+          <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">${t('Notes','הערות')}</div>
           <div style="font-size:12px;color:#aaa;line-height:1.6;">${m.notes}</div>
         </div>
       </div>

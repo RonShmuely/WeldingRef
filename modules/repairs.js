@@ -47,45 +47,45 @@ const RepairsModule = {
     document.getElementById('main-content').innerHTML = `
     <div class="fade-up" style="max-width:1060px;">
       <div class="page-header">
-        <div class="page-title">Repair <span>Log</span></div>
-        <div class="page-sub">${repairs.length} repair${repairs.length !== 1 ? 's' : ''} logged · Stored locally</div>
+        <div class="page-title">${t('Repair', 'יומן')} <span>${t('Log', 'תיקונים')}</span></div>
+        <div class="page-sub">${repairs.length} ${t(repairs.length !== 1 ? 'repairs logged' : 'repair logged', 'תיקונים רשומים')} · ${t('Stored locally', 'נשמר מקומית')}</div>
       </div>
 
       <div class="repairs-layout">
         <!-- FORM -->
         <div class="repair-form-card">
-          <div class="form-title">Log New Repair</div>
+          <div class="form-title">${t('Log New Repair', 'רשום תיקון חדש')}</div>
 
           <div class="form-row">
-            <label class="form-label">Date</label>
+            <label class="form-label">${t('Date', 'תאריך')}</label>
             <input type="date" id="rf-date" value="${new Date().toISOString().slice(0,10)}" />
           </div>
           <div class="form-row">
-            <label class="form-label">Machine</label>
+            <label class="form-label">${t('Machine', 'מכונה')}</label>
             <select id="rf-machine">
-              <option value="">— Select —</option>
+              <option value="">${t('— Select —', '— בחר —')}</option>
               ${this.MACHINES.map(m => `<option>${m}</option>`).join('')}
             </select>
           </div>
           <div class="form-row">
-            <label class="form-label">Repair Type</label>
+            <label class="form-label">${t('Repair Type', 'סוג תיקון')}</label>
             <select id="rf-type">
-              <option value="">— Select —</option>
-              ${this.REPAIR_TYPES.map(t => `<option>${t}</option>`).join('')}
+              <option value="">${t('— Select —', '— בחר —')}</option>
+              ${this.REPAIR_TYPES.map(rt => `<option>${rt}</option>`).join('')}
             </select>
           </div>
           <div class="form-row">
-            <label class="form-label">Electrode / Wire Used</label>
+            <label class="form-label">${t('Electrode / Wire Used', 'אלקטרודה / חוט בשימוש')}</label>
             <input type="text" id="rf-electrode" placeholder="e.g. E7018 3.2mm, ER70S-6 0.8mm" />
           </div>
           <div class="form-row">
-            <label class="form-label">Notes</label>
-            <textarea id="rf-notes" placeholder="Describe the repair, location, condition, approach…"></textarea>
+            <label class="form-label">${t('Notes', 'הערות')}</label>
+            <textarea id="rf-notes" placeholder="${t('Describe the repair, location, condition, approach…', 'תאר את התיקון, מיקום, מצב, גישה…')}"></textarea>
           </div>
 
           <div style="display:flex;gap:8px;margin-top:4px;">
-            <button class="btn btn-primary" style="flex:1;" onclick="RepairsModule.submitForm()">+ Log Repair</button>
-            <button class="btn btn-ghost" onclick="RepairsModule.clearForm()">Clear</button>
+            <button class="btn btn-primary" style="flex:1;" onclick="RepairsModule.submitForm()">+ ${t('Log Repair', 'הוסף תיקון')}</button>
+            <button class="btn btn-ghost" onclick="RepairsModule.clearForm()">${t('Clear', 'נקה')}</button>
           </div>
           <div id="rf-msg" style="margin-top:10px;"></div>
         </div>
@@ -93,13 +93,13 @@ const RepairsModule = {
         <!-- LOG LIST -->
         <div class="repair-log-list" id="repairs-list">
           ${repairs.length === 0
-            ? '<div class="empty-state"><div class="big">📋</div><p>No repairs logged yet.<br>Use the form to add your first entry.</p></div>'
+            ? `<div class="empty-state"><div class="big">📋</div><p>${t('No repairs logged yet.', 'אין תיקונים רשומים עדיין.')}<br>${t('Use the form to add your first entry.', 'השתמש בטופס להוספת הרשומה הראשונה.')}</p></div>`
             : repairs.map(r => this.repairEntry(r)).join('')
           }
         </div>
       </div>
 
-      <div class="module-footer">Repair data is stored in your browser's localStorage.</div>
+      <div class="module-footer">${t("Repair data is stored in your browser's localStorage.", 'נתוני התיקונים נשמרים ב-localStorage של הדפדפן.')}</div>
     </div>`;
   },
 
@@ -129,12 +129,12 @@ const RepairsModule = {
     const msg      = document.getElementById('rf-msg');
 
     if (!machine || !type) {
-      msg.innerHTML = '<div class="error-msg">Select machine and repair type.</div>';
+      msg.innerHTML = `<div class="error-msg">${t('Select machine and repair type.', 'בחר מכונה וסוג תיקון.')}</div>`;
       return;
     }
 
     this.add({ date, machine, type, electrode, notes });
-    msg.innerHTML = '<div class="success-msg">✓ Repair logged.</div>';
+    msg.innerHTML = `<div class="success-msg">✓ ${t('Repair logged.', 'התיקון נרשם.')}</div>`;
     this.clearForm();
     // refresh list
     const repairs = this.getAll();
@@ -152,14 +152,14 @@ const RepairsModule = {
   },
 
   deleteEntry(id) {
-    if (!confirm('Delete this repair entry?')) return;
+    if (!confirm(t('Delete this repair entry?', 'למחוק רשומת תיקון זו?'))) return;
     this.remove(id);
     const el = document.getElementById(`re-${id}`);
     if (el) el.remove();
     const repairs = this.getAll();
     if (repairs.length === 0) {
       document.getElementById('repairs-list').innerHTML =
-        '<div class="empty-state"><div class="big">📋</div><p>No repairs logged yet.</p></div>';
+        `<div class="empty-state"><div class="big">📋</div><p>${t('No repairs logged yet.', 'אין תיקונים רשומים עדיין.')}</p></div>`;
     }
   }
 };
