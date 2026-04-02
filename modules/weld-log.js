@@ -7,6 +7,7 @@ const WeldLogModule = {
   API: '/api/weld-log.php',
   activeTab: 'repairs',
   entries: [],
+  archived: [],
 
   async render() {
     document.getElementById('main-content').innerHTML = `
@@ -24,6 +25,10 @@ const WeldLogModule = {
                 onclick="WeldLogModule.switchTab('projects')">
           ${t('Projects', 'פרויקטים')}
         </button>
+        <button class="wl-tab ${this.activeTab === 'archived' ? 'active' : ''}"
+                onclick="WeldLogModule.switchTab('archived')">
+          ${t('Archived', 'ארכיון')}
+        </button>
       </div>
 
       <div id="wl-form-area"></div>
@@ -31,8 +36,13 @@ const WeldLogModule = {
     </div>`;
 
     await this.loadEntries();
-    this.renderForm();
-    this.renderEntries();
+    if (this.activeTab === 'archived') {
+      document.getElementById('wl-form-area').innerHTML = '';
+      this.renderEntries();
+    } else {
+      this.renderForm();
+      this.renderEntries();
+    }
   },
 
   switchTab(tab) {
@@ -46,6 +56,12 @@ const WeldLogModule = {
       this.entries = await res.json();
     } catch (e) {
       this.entries = [];
+    }
+    try {
+      const res = await fetch(this.API + '?archive=1');
+      this.archived = await res.json();
+    } catch (e) {
+      this.archived = [];
     }
   },
 
@@ -68,10 +84,11 @@ const WeldLogModule = {
           </label>
           <label>${t('Machine', 'מכונה')}
             <select name="machine_type" onchange="WeldLogModule.onMachineChange(this)">
-              <option value="gadola">${t('Large Miller W200i', 'גדולה W200i')}</option>
-              <option value="ktana">${t('Small Miller W50ri', 'קטנה W50ri')}</option>
-              <option value="bobcat">${t('Skidsteer Gehl/Mustang', 'בובקט')}</option>
-              <option value="misc">${t('Misc', 'שונות')}</option>
+              <option value="gadola">${t('W200i גדולה', 'W200i גדולה')}</option>
+              <option value="ktana">${t('W50ri קטנה', 'W50ri קטנה')}</option>
+              <option value="bobcat-gehl">${t('Skidsteer Gehl בובקט', 'בובקט Gehl')}</option>
+              <option value="bobcat-mustang">${t('Mustang 1900r בובקט', 'בובקט Mustang 1900r')}</option>
+              <option value="other">${t('Other', 'מסגרייה')}</option>
             </select>
           </label>
         </div>
@@ -81,7 +98,20 @@ const WeldLogModule = {
           </label>
         </div>
         <div class="wl-row">
-          <label>${t('Electrodes used', 'אלקטרודות')}
+          <label>${t('Welder used', 'מכונת ריתוך')}
+            <select name="welder">
+              <option value="">${t('-- Select --', '-- בחר --')}</option>
+              <option value="helvi-406c">Helvi Compact 406C</option>
+              <option value="jasic-630">Jasic ARC 630</option>
+              <option value="kemppi-minarcmig">Kemppi MinarcMig Evo 200</option>
+              <option value="btt-fox-189">BTT FOX 189</option>
+              <option value="zika-i200c">Zika i-200C Premium</option>
+              <option value="jasic-cut100">Jasic CUT-100</option>
+            </select>
+          </label>
+        </div>
+        <div class="wl-row">
+          <label>${t('Electrodes/wire used', 'אלקטרודות/חוט')}
             <input type="text" name="electrodes" placeholder="${t('e.g. E6013 3.2mm', 'לדוגמה E6013 3.2mm')}">
           </label>
           <label>${t('Amp settings', 'הגדרת אמפר')}
@@ -130,13 +160,14 @@ const WeldLogModule = {
 
   onMachineChange(sel) {
     const detail = document.getElementById('wl-machine-detail');
-    detail.style.display = sel.value === 'misc' ? 'none' : '';
+    detail.style.display = sel.value === 'other' ? 'none' : '';
     const label = detail.querySelector('label');
     const input = detail.querySelector('input');
     const labels = {
-      gadola: t('גדולה number', 'מספר גדולה'),
-      ktana:  t('קטנה number',  'מספר קטנה'),
-      bobcat: t('בובקט number', 'מספר בובקט'),
+      gadola:          t('גדולה number', 'מספר גדולה'),
+      ktana:           t('קטנה number',  'מספר קטנה'),
+      'bobcat-gehl':   t('Gehl number',  'מספר Gehl'),
+      'bobcat-mustang': t('Mustang number', 'מספר Mustang'),
     };
     if (label && labels[sel.value]) label.firstChild.textContent = labels[sel.value] + '\n';
     if (input) input.value = '';
@@ -146,10 +177,11 @@ const WeldLogModule = {
     const type   = form.machine_type.value;
     const detail = form.machine_detail ? form.machine_detail.value.trim() : '';
     const map = {
-      gadola: `גדולה ${detail}`,
-      ktana:  `קטנה ${detail}`,
-      bobcat: `בובקט ${detail}`,
-      misc:   detail || 'Misc',
+      gadola:          `גדולה ${detail}`,
+      ktana:           `קטנה ${detail}`,
+      'bobcat-gehl':   `בובקט Gehl ${detail}`,
+      'bobcat-mustang': `בובקט Mustang 1900r ${detail}`,
+      other:           detail || 'Other',
     };
     return map[type] || type;
   },
@@ -164,6 +196,7 @@ const WeldLogModule = {
     fd.append('type',        'repair');
     fd.append('date',        form.date.value);
     fd.append('machine',     this.buildMachineLabel(form));
+    fd.append('welder',      form.welder.value);
     fd.append('electrodes',  form.electrodes.value);
     fd.append('amps',        form.amps.value);
     fd.append('description', form.description.value);
@@ -212,8 +245,18 @@ const WeldLogModule = {
 
   // ── RENDER ENTRIES ────────────────────────────────────────
   renderEntries() {
-    const area     = document.getElementById('wl-entries-area');
-    const tab      = this.activeTab;
+    const area = document.getElementById('wl-entries-area');
+    const tab  = this.activeTab;
+
+    if (tab === 'archived') {
+      if (!this.archived.length) {
+        area.innerHTML = `<p class="wl-empty">${t('No archived entries.', 'אין רשומות בארכיון.')}</p>`;
+        return;
+      }
+      area.innerHTML = this.archived.map(entry => this.entryHTML(entry, true)).join('');
+      return;
+    }
+
     const filtered = this.entries.filter(e => {
       if (tab === 'repairs')  return e.type === 'repair';
       if (tab === 'projects') return e.type === 'project';
@@ -225,14 +268,19 @@ const WeldLogModule = {
       return;
     }
 
-    area.innerHTML = filtered.map(entry => this.entryHTML(entry)).join('');
+    area.innerHTML = filtered.map(entry => this.entryHTML(entry, false)).join('');
   },
 
-  entryHTML(entry) {
-    const actions = `
+  entryHTML(entry, isArchived = false) {
+    const actions = isArchived ? `
+      <div class="wl-entry-actions">
+        <button class="wl-action-btn" onclick="WeldLogModule.unarchiveEntry('${entry.id}')" title="${t('Unarchive','שחזר')}">📤</button>
+        <button class="wl-action-btn wl-delete-btn" onclick="WeldLogModule.deleteEntry('${entry.id}', true)" title="${t('Delete','מחק')}">🗑️</button>
+      </div>` : `
       <div class="wl-entry-actions">
         <button class="wl-action-btn" onclick="WeldLogModule.startEdit('${entry.id}')" title="${t('Edit','ערוך')}">✏️</button>
-        <button class="wl-action-btn wl-delete-btn" onclick="WeldLogModule.deleteEntry('${entry.id}')" title="${t('Delete','מחק')}">🗑️</button>
+        <button class="wl-action-btn" onclick="WeldLogModule.archiveEntry('${entry.id}')" title="${t('Archive','העבר לארכיון')}">📦</button>
+        <button class="wl-action-btn wl-delete-btn" onclick="WeldLogModule.deleteEntry('${entry.id}', false)" title="${t('Delete','מחק')}">🗑️</button>
       </div>`;
 
     const thumbs = entry.images && entry.images.length ? `
@@ -254,6 +302,7 @@ const WeldLogModule = {
           ${actions}
         </div>
         <div class="wl-entry-meta">
+          ${entry.welder     ? `<span>🔧 ${entry.welder}</span>` : ''}
           ${entry.electrodes ? `<span>⚡ ${entry.electrodes}</span>` : ''}
           ${entry.amps       ? `<span>🔌 ${entry.amps}</span>` : ''}
         </div>
@@ -306,7 +355,12 @@ const WeldLogModule = {
             </label>
           </div>
           <div class="wl-row">
-            <label>${t('Electrodes','אלקטרודות')}
+            <label>${t('Welder','מכונת ריתוך')}
+              <input type="text" name="welder" value="${entry.welder || ''}">
+            </label>
+          </div>
+          <div class="wl-row">
+            <label>${t('Electrodes/wire','אלקטרודות/חוט')}
               <input type="text" name="electrodes" value="${entry.electrodes || ''}">
             </label>
             <label>${t('Amps','אמפר')}
@@ -376,7 +430,7 @@ const WeldLogModule = {
     const entry = this.entries.find(e => e.id === id);
     if (!entry) return;
     const card = document.getElementById(`wl-entry-${id}`);
-    if (card) card.outerHTML = this.entryHTML(entry);
+    if (card) card.outerHTML = this.entryHTML(entry, false);
   },
 
   async saveEdit(e, id) {
@@ -392,6 +446,7 @@ const WeldLogModule = {
     if (entry.type === 'repair') {
       fd.append('date',        form.date.value);
       fd.append('machine',     form.machine.value);
+      fd.append('welder',      form.welder.value);
       fd.append('electrodes',  form.electrodes.value);
       fd.append('amps',        form.amps.value);
       fd.append('description', form.description.value);
@@ -416,14 +471,43 @@ const WeldLogModule = {
     }
   },
 
+  // ── ARCHIVE ───────────────────────────────────────────────
+  async archiveEntry(id) {
+    try {
+      await fetch(this.API, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `id=${encodeURIComponent(id)}&action=archive`,
+      });
+      await this.loadEntries();
+      this.renderEntries();
+    } catch (err) {
+      alert(t('Error archiving. Check server.', 'שגיאה בארכיון.'));
+    }
+  },
+
+  async unarchiveEntry(id) {
+    try {
+      await fetch(this.API, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `id=${encodeURIComponent(id)}&action=unarchive`,
+      });
+      await this.loadEntries();
+      this.renderEntries();
+    } catch (err) {
+      alert(t('Error unarchiving. Check server.', 'שגיאה בשחזור.'));
+    }
+  },
+
   // ── DELETE ────────────────────────────────────────────────
-  async deleteEntry(id) {
+  async deleteEntry(id, fromArchive = false) {
     if (!confirm(t('Delete this entry?', 'למחוק רשומה זו?'))) return;
     try {
       await fetch(this.API, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `id=${encodeURIComponent(id)}`,
+        body: `id=${encodeURIComponent(id)}&action=delete${fromArchive ? '&archive=1' : ''}`,
       });
       await this.loadEntries();
       this.renderEntries();

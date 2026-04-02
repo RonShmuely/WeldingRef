@@ -2,8 +2,9 @@
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: ' . ($_SERVER['HTTP_HOST'] ?? 'localhost'));
 
-$logsFile  = __DIR__ . '/../weld-log-data/logs.json';
-$imagesDir = __DIR__ . '/../weld-log-data/images/';
+$logsFile     = __DIR__ . '/../weld-log-data/logs.json';
+$archivedFile = __DIR__ . '/../weld-log-data/archived/logs.json';
+$imagesDir    = __DIR__ . '/../weld-log-data/images/';
 
 // ── Helpers ──────────────────────────────────────────────
 function readLogs($logsFile) {
@@ -45,19 +46,58 @@ function handleImages($imagesDir) {
     return $saved;
 }
 
-// ── GET — return all entries ──────────────────────────────
+// ── GET — return entries (or archived) ───────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    echo json_encode(readLogs($logsFile));
+    $file = !empty($_GET['archive']) ? $archivedFile : $logsFile;
+    echo json_encode(readLogs($file));
     exit;
 }
 
-// ── DELETE — remove entry by id ──────────────────────────
+// ── DELETE / ARCHIVE / UNARCHIVE ─────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     parse_str(file_get_contents('php://input'), $input);
-    $id   = $input['id'] ?? '';
-    $logs = readLogs($logsFile);
-    $logs = array_values(array_filter($logs, fn($e) => $e['id'] !== $id));
-    writeLogs($logsFile, $logs);
+    $id          = $input['id']      ?? '';
+    $action      = $input['action']  ?? 'delete';
+    $fromArchive = !empty($input['archive']);
+
+    if ($action === 'archive') {
+        // Move from logs → archived
+        $logs     = readLogs($logsFile);
+        $entry    = null;
+        $logs     = array_values(array_filter($logs, function($e) use ($id, &$entry) {
+            if ($e['id'] === $id) { $entry = $e; return false; }
+            return true;
+        }));
+        if ($entry) {
+            $archived = readLogs($archivedFile);
+            array_unshift($archived, $entry);
+            writeLogs($archivedFile, $archived);
+        }
+        writeLogs($logsFile, $logs);
+
+    } elseif ($action === 'unarchive') {
+        // Move from archived → logs
+        $archived = readLogs($archivedFile);
+        $entry    = null;
+        $archived = array_values(array_filter($archived, function($e) use ($id, &$entry) {
+            if ($e['id'] === $id) { $entry = $e; return false; }
+            return true;
+        }));
+        if ($entry) {
+            $logs = readLogs($logsFile);
+            array_unshift($logs, $entry);
+            writeLogs($logsFile, $logs);
+        }
+        writeLogs($archivedFile, $archived);
+
+    } else {
+        // Hard delete from appropriate file
+        $file = $fromArchive ? $archivedFile : $logsFile;
+        $logs = readLogs($file);
+        $logs = array_values(array_filter($logs, fn($e) => $e['id'] !== $id));
+        writeLogs($file, $logs);
+    }
+
     echo json_encode(['ok' => true]);
     exit;
 }
@@ -83,6 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $entry = $logs[$idx];
         if (isset($_POST['date']))         $entry['date']         = $_POST['date'];
         if (isset($_POST['machine']))      $entry['machine']      = $_POST['machine'];
+        if (isset($_POST['welder']))       $entry['welder']       = $_POST['welder'];
         if (isset($_POST['electrodes']))   $entry['electrodes']   = $_POST['electrodes'];
         if (isset($_POST['amps']))         $entry['amps']         = $_POST['amps'];
         if (isset($_POST['description']))  $entry['description']  = $_POST['description'];
@@ -126,6 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($type === 'repair') {
         $entry['machine']     = $_POST['machine']     ?? '';
+        $entry['welder']      = $_POST['welder']      ?? '';
         $entry['electrodes']  = $_POST['electrodes']  ?? '';
         $entry['amps']        = $_POST['amps']        ?? '';
         $entry['description'] = $_POST['description'] ?? '';
