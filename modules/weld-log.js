@@ -149,7 +149,7 @@ const WeldLogModule = {
       gadola: `גדולה ${detail}`,
       ktana:  `קטנה ${detail}`,
       bobcat: `בובקט ${detail}`,
-      misc:   form.machine_detail ? form.machine_detail.value.trim() : 'Misc',
+      misc:   detail || 'Misc',
     };
     return map[type] || type;
   },
