@@ -63,8 +63,8 @@
       <a class="nav-item" data-module="repairs" onclick="navigate('repairs')">
         <span class="nav-icon">📋</span><span class="nav-label" id="nav-repairs">Repairs</span>
       </a>
-      <a class="nav-item" href="modules/weld-log/dist/index.html">
-        <span class="nav-icon">🔧</span><span class="nav-label">Weld Log — יומן ריתוך</span>
+      <a class="nav-item" data-module="weld-log" onclick="navigate('weld-log')">
+        <span class="nav-icon">🔧</span><span class="nav-label" id="nav-weld-log">Weld Log</span>
       </a>
     </nav>
 
@@ -87,6 +87,7 @@
       <div class="topbar-title" id="topbar-title">WeldRef</div>
       <div class="topbar-actions">
         <span class="topbar-date" id="topbar-date"></span>
+        <button class="topbar-refresh" onclick="location.reload()" title="Refresh">↺</button>
       </div>
     </header>
 
@@ -107,6 +108,7 @@
 <script src="modules/settings.js"></script>
 <script src="modules/hplus.js"></script>
 <script src="modules/repairs.js"></script>
+<script src="modules/weld-log.js"></script>
 
 <script>
 // ═══════════════════════════════════════════════════════════
@@ -131,6 +133,7 @@ const MODULE_MAP = {
   hplus:      HPlusModule,
   checklist:  ChecklistModule,
   repairs:    RepairsModule,
+  'weld-log': WeldLogModule,
 };
 
 function getModuleTitle(mod) {
@@ -145,6 +148,7 @@ function getModuleTitle(mod) {
     hplus:      t('H-Plus',        'H-Plus'),
     checklist:  t('Checklist',     'צ\'קליסט'),
     repairs:    t('Repair Log',    'יומן תיקונים'),
+    'weld-log': t('Weld Log', 'יומן ריתוך'),
   };
   return titles[mod] || 'WeldRef';
 }
@@ -182,6 +186,7 @@ function updateNavLabels() {
     'nav-hplus':      t('H-Plus',       'H-Plus'),
     'nav-checklist':  t('Checklist',    'צ\'קליסט'),
     'nav-repairs':    t('Repairs',      'תיקונים'),
+    'nav-weld-log': t('Weld Log', 'יומן ריתוך'),
     'nav-sec-reference': t('Reference', 'עיון'),
     'nav-sec-daily':     t('Daily Tools','כלים יומיים'),
     'nav-sec-records':   t('Records',   'רשומות'),
