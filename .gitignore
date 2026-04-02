@@ -16,3 +16,6 @@ desktop.ini
 
 # Dependencies
 node_modules/
+
+# Git worktrees
+.worktrees/
