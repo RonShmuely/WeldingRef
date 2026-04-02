@@ -4,7 +4,7 @@
 
 const WeldLogModule = {
 
-  API: '/WeldingRef/api/weld-log.php',
+  API: '/api/weld-log.php',
   activeTab: 'repairs',
   entries: [],
 
@@ -210,9 +210,10 @@ const WeldLogModule = {
     }
   },
 
+  // ── RENDER ENTRIES ────────────────────────────────────────
   renderEntries() {
-    const area    = document.getElementById('wl-entries-area');
-    const tab     = this.activeTab;
+    const area     = document.getElementById('wl-entries-area');
+    const tab      = this.activeTab;
     const filtered = this.entries.filter(e => {
       if (tab === 'repairs')  return e.type === 'repair';
       if (tab === 'projects') return e.type === 'project';
@@ -224,37 +225,214 @@ const WeldLogModule = {
       return;
     }
 
-    area.innerHTML = filtered.map(entry => `
-    <div class="wl-entry">
-      <div class="wl-entry-header">
-        <span class="wl-entry-date">${entry.date}</span>
-        ${entry.type === 'repair'
-          ? `<span class="wl-entry-machine">${entry.machine}</span>`
-          : `<span class="wl-entry-machine">${entry.project_name}</span>`
-        }
-      </div>
-      ${entry.type === 'repair' ? `
+    area.innerHTML = filtered.map(entry => this.entryHTML(entry)).join('');
+  },
+
+  entryHTML(entry) {
+    const actions = `
+      <div class="wl-entry-actions">
+        <button class="wl-action-btn" onclick="WeldLogModule.startEdit('${entry.id}')" title="${t('Edit','ערוך')}">✏️</button>
+        <button class="wl-action-btn wl-delete-btn" onclick="WeldLogModule.deleteEntry('${entry.id}')" title="${t('Delete','מחק')}">🗑️</button>
+      </div>`;
+
+    const thumbs = entry.images && entry.images.length ? `
+      <div class="wl-thumbs">
+        ${entry.images.map(img => `
+          <img src="/weld-log-data/images/${img}"
+               class="wl-thumb"
+               onclick="WeldLogModule.openImage('/weld-log-data/images/${img}')"
+               alt="weld photo">
+        `).join('')}
+      </div>` : '';
+
+    if (entry.type === 'repair') {
+      return `
+      <div class="wl-entry" id="wl-entry-${entry.id}">
+        <div class="wl-entry-header">
+          <span class="wl-entry-date">${entry.date}</span>
+          <span class="wl-entry-machine">${entry.machine}</span>
+          ${actions}
+        </div>
         <div class="wl-entry-meta">
           ${entry.electrodes ? `<span>⚡ ${entry.electrodes}</span>` : ''}
           ${entry.amps       ? `<span>🔌 ${entry.amps}</span>` : ''}
         </div>
         ${entry.description ? `<div class="wl-entry-desc">${entry.description}</div>` : ''}
-      ` : `
-        ${entry.notes ? `<div class="wl-entry-desc">${entry.notes}</div>` : ''}
-      `}
-      ${entry.images && entry.images.length ? `
-        <div class="wl-thumbs">
-          ${entry.images.map(img => `
-            <img src="/WeldingRef/weld-log-data/images/${img}"
-                 class="wl-thumb"
-                 onclick="WeldLogModule.openImage('/WeldingRef/weld-log-data/images/${img}')"
-                 alt="weld photo">
-          `).join('')}
+        ${thumbs}
+      </div>`;
+    } else {
+      return `
+      <div class="wl-entry" id="wl-entry-${entry.id}">
+        <div class="wl-entry-header">
+          <span class="wl-entry-date">${entry.date}</span>
+          <span class="wl-entry-machine">${entry.project_name}</span>
+          ${actions}
         </div>
-      ` : ''}
-    </div>`).join('');
+        ${entry.notes ? `<div class="wl-entry-desc">${entry.notes}</div>` : ''}
+        ${thumbs}
+      </div>`;
+    }
   },
 
+  // ── INLINE EDIT ───────────────────────────────────────────
+  startEdit(id) {
+    const entry = this.entries.find(e => e.id === id);
+    if (!entry) return;
+    const card = document.getElementById(`wl-entry-${id}`);
+    if (!card) return;
+
+    const removedImages = [];
+
+    const thumbsEdit = entry.images && entry.images.length ? `
+      <div class="wl-thumbs wl-thumbs-edit" id="wl-thumbs-edit-${id}">
+        ${entry.images.map(img => `
+          <div class="wl-thumb-wrap" id="wl-tw-${img.replace(/\./g,'_')}">
+            <img src="/weld-log-data/images/${img}" class="wl-thumb" alt="weld photo">
+            <button type="button" class="wl-thumb-remove"
+                    onclick="WeldLogModule.removeThumb('${id}','${img}')">✕</button>
+          </div>
+        `).join('')}
+      </div>` : `<div class="wl-thumbs wl-thumbs-edit" id="wl-thumbs-edit-${id}"></div>`;
+
+    if (entry.type === 'repair') {
+      card.innerHTML = `
+        <form class="wl-inline-form" onsubmit="WeldLogModule.saveEdit(event,'${id}')">
+          <div class="wl-row">
+            <label>${t('Date','תאריך')}
+              <input type="text" name="date" value="${entry.date}" required>
+            </label>
+            <label>${t('Machine','מכונה')}
+              <input type="text" name="machine" value="${entry.machine}">
+            </label>
+          </div>
+          <div class="wl-row">
+            <label>${t('Electrodes','אלקטרודות')}
+              <input type="text" name="electrodes" value="${entry.electrodes || ''}">
+            </label>
+            <label>${t('Amps','אמפר')}
+              <input type="text" name="amps" value="${entry.amps || ''}">
+            </label>
+          </div>
+          <div class="wl-row">
+            <label style="flex:1">${t('What was repaired','מה תוקן')}
+              <textarea name="description" rows="3">${entry.description || ''}</textarea>
+            </label>
+          </div>
+          ${thumbsEdit}
+          <div class="wl-row">
+            <label style="flex:1">${t('Add images','הוסף תמונות')}
+              <input type="file" name="images" accept="image/*" multiple>
+            </label>
+          </div>
+          <div class="wl-inline-actions">
+            <button type="submit" class="wl-submit">${t('Save','שמור')}</button>
+            <button type="button" class="wl-cancel-btn" onclick="WeldLogModule.cancelEdit('${id}')">${t('Cancel','ביטול')}</button>
+          </div>
+        </form>`;
+    } else {
+      card.innerHTML = `
+        <form class="wl-inline-form" onsubmit="WeldLogModule.saveEdit(event,'${id}')">
+          <div class="wl-row">
+            <label style="flex:1">${t('Project name','שם פרויקט')}
+              <input type="text" name="project_name" value="${entry.project_name || ''}" required>
+            </label>
+            <label>${t('Date','תאריך')}
+              <input type="text" name="date" value="${entry.date}" required>
+            </label>
+          </div>
+          <div class="wl-row">
+            <label style="flex:1">${t('Notes','הערות')}
+              <textarea name="notes" rows="3">${entry.notes || ''}</textarea>
+            </label>
+          </div>
+          ${thumbsEdit}
+          <div class="wl-row">
+            <label style="flex:1">${t('Add images','הוסף תמונות')}
+              <input type="file" name="images" accept="image/*" multiple>
+            </label>
+          </div>
+          <div class="wl-inline-actions">
+            <button type="submit" class="wl-submit">${t('Save','שמור')}</button>
+            <button type="button" class="wl-cancel-btn" onclick="WeldLogModule.cancelEdit('${id}')">${t('Cancel','ביטול')}</button>
+          </div>
+        </form>`;
+    }
+
+    // Store pending removals on the card element
+    card._removedImages = [];
+  },
+
+  removeThumb(id, img) {
+    const card = document.getElementById(`wl-entry-${id}`);
+    if (card) {
+      card._removedImages = card._removedImages || [];
+      card._removedImages.push(img);
+    }
+    const wrap = document.getElementById(`wl-tw-${img.replace(/\./g,'_')}`);
+    if (wrap) wrap.remove();
+  },
+
+  cancelEdit(id) {
+    const entry = this.entries.find(e => e.id === id);
+    if (!entry) return;
+    const card = document.getElementById(`wl-entry-${id}`);
+    if (card) card.outerHTML = this.entryHTML(entry);
+  },
+
+  async saveEdit(e, id) {
+    e.preventDefault();
+    const form = e.target;
+    const card = document.getElementById(`wl-entry-${id}`);
+    const entry = this.entries.find(e => e.id === id);
+    if (!entry) return;
+
+    const fd = new FormData();
+    fd.append('id', id);
+
+    if (entry.type === 'repair') {
+      fd.append('date',        form.date.value);
+      fd.append('machine',     form.machine.value);
+      fd.append('electrodes',  form.electrodes.value);
+      fd.append('amps',        form.amps.value);
+      fd.append('description', form.description.value);
+    } else {
+      fd.append('date',         form.date.value);
+      fd.append('project_name', form.project_name.value);
+      fd.append('notes',        form.notes.value);
+    }
+
+    const removed = card._removedImages || [];
+    if (removed.length) fd.append('remove_images', JSON.stringify(removed));
+
+    for (const file of form.images.files) fd.append('images[]', file);
+
+    try {
+      const res = await fetch(this.API, { method: 'POST', body: fd });
+      if (!res.ok) throw new Error('Server error');
+      await this.loadEntries();
+      this.renderEntries();
+    } catch (err) {
+      alert(t('Error saving. Check server.', 'שגיאה בשמירה.'));
+    }
+  },
+
+  // ── DELETE ────────────────────────────────────────────────
+  async deleteEntry(id) {
+    if (!confirm(t('Delete this entry?', 'למחוק רשומה זו?'))) return;
+    try {
+      await fetch(this.API, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `id=${encodeURIComponent(id)}`,
+      });
+      await this.loadEntries();
+      this.renderEntries();
+    } catch (err) {
+      alert(t('Error deleting. Check server.', 'שגיאה במחיקה.'));
+    }
+  },
+
+  // ── LIGHTBOX ──────────────────────────────────────────────
   openImage(src) {
     const overlay = document.createElement('div');
     overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9999;display:flex;align-items:center;justify-content:center;cursor:zoom-out;';

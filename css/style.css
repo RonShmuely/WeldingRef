@@ -1700,6 +1700,10 @@ select option { background: var(--surface2); }
   .repairs-layout { grid-template-columns: 1fr; }
   .settings-selectors { grid-template-columns: 1fr; }
   .tables-row { grid-template-columns: 1fr; }
+  .wl-row { flex-direction: column; gap: 10px; }
+  .wl-row label { min-width: 0; width: 100%; }
+  .wl-form { padding: 14px; }
+  .wl-submit { align-self: stretch; }
 }
 
 @media (max-width: 480px) {
@@ -1882,6 +1886,85 @@ select option { background: var(--surface2); }
   font-size: 14px;
   padding: 20px 0;
 }
+
+/* Entry actions */
+.wl-entry-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 4px;
+}
+
+.wl-action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 2px 5px;
+  border-radius: 3px;
+  opacity: 0.5;
+  transition: opacity .15s, background .15s;
+}
+
+.wl-action-btn:hover { opacity: 1; background: var(--surface2); }
+.wl-delete-btn:hover { background: rgba(232,41,11,.15); }
+
+/* Inline edit form */
+.wl-inline-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wl-inline-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.wl-cancel-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .5px;
+  padding: 9px 18px;
+  text-transform: uppercase;
+  transition: color .15s, border-color .15s;
+}
+
+.wl-cancel-btn:hover { color: var(--text); border-color: var(--text); }
+
+/* Thumbnail remove button */
+.wl-thumb-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.wl-thumb-remove {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--accent);
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  font-size: 9px;
+  font-weight: 700;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+}
+
+.wl-thumbs-edit { margin-top: 4px; }
 
 /* ═══════════════════════════════════════════
    TOPBAR REFRESH BUTTON
