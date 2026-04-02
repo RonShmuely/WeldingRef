@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="80" fill="#0e0e0f"/>
+  <!-- Arc flash sparks -->
+  <line x1="256" y1="200" x2="210" y2="310" stroke="#e8290b" stroke-width="10" stroke-linecap="round"/>
+  <line x1="256" y1="200" x2="302" y2="310" stroke="#e8290b" stroke-width="10" stroke-linecap="round"/>
+  <!-- Electrode rod -->
+  <rect x="242" y="100" width="28" height="120" rx="6" fill="#f5a623"/>
+  <!-- Arc glow -->
+  <circle cx="256" cy="205" r="22" fill="#fff" opacity="0.95"/>
+  <circle cx="256" cy="205" r="34" fill="#e8290b" opacity="0.45"/>
+  <circle cx="256" cy="205" r="48" fill="#f5a623" opacity="0.18"/>
+  <!-- Spark dots -->
+  <circle cx="188" cy="255" r="6" fill="#f5a623" opacity="0.8"/>
+  <circle cx="172" cy="228" r="4" fill="#e8290b" opacity="0.7"/>
+  <circle cx="324" cy="248" r="5" fill="#f5a623" opacity="0.8"/>
+  <circle cx="340" cy="222" r="4" fill="#e8290b" opacity="0.7"/>
+  <circle cx="256" cy="360" r="5" fill="#f5a623" opacity="0.6"/>
+  <!-- Workpiece base -->
+  <rect x="140" y="320" width="232" height="44" rx="8" fill="#2a2a2e"/>
+  <rect x="140" y="320" width="232" height="8" rx="4" fill="#3a3a3e"/>
+  <!-- Weld bead on workpiece -->
+  <ellipse cx="256" cy="322" rx="60" ry="6" fill="#f5a623" opacity="0.7"/>
+  <!-- "WR" text -->
+  <text x="256" y="420" font-family="Arial Black, sans-serif" font-size="52" font-weight="900"
+        fill="#f0f0f0" text-anchor="middle" letter-spacing="2">WR</text>
+</svg>
