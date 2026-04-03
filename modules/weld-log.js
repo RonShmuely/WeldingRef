@@ -813,12 +813,17 @@ const WeldLogModule = {
     if (!entry || !entry.images?.length) return;
 
     const self = this;
+
+    // Use viewport as initial size — PhotoSwipe will resize once image loads
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+
     const items = entry.images.map(img => {
       const src = self.imgPath(entry, img);
       if (self.isVideo(img)) {
         return { html: `<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%"><video src="${src}" controls autoplay playsinline style="max-width:100%;max-height:90vh;"></video></div>` };
       }
-      return { src, w: 2000, h: 1500 };
+      return { src, w: vw, h: vh, msrc: src };
     });
 
     history.pushState({ gallery: true }, '');
@@ -830,6 +835,22 @@ const WeldLogModule = {
       showHideAnimationType: 'fade',
       closeOnVerticalDrag: true,
       pinchToClose: true,
+    });
+
+    // Auto-detect real image dimensions when slide loads
+    pswp.on('contentLoad', (e) => {
+      const { content } = e;
+      if (content.data.src && !content.data._sizeDetected) {
+        const img = new Image();
+        img.onload = () => {
+          content.data.w = img.naturalWidth;
+          content.data.h = img.naturalHeight;
+          content.data._sizeDetected = true;
+          pswp.refreshSlideContent(content.index);
+        };
+        img.src = content.data.src;
+        content.data._sizeDetected = true; // prevent re-trigger
+      }
     });
 
     pswp.on('close', () => {
