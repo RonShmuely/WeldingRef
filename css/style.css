@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@300;400;500;600;700;800;900&display=swap');
 
 /* ═══════════════════════════════════════════
    ROOT & RESET
@@ -27,7 +27,7 @@ html, body { height: 100%; }
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: 'Barlow', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   overflow: hidden;
 }
 
@@ -49,6 +49,7 @@ body::before {
 #app {
   display: flex;
   height: 100vh;
+  height: 100dvh;
   position: relative;
   z-index: 1;
 }
@@ -60,10 +61,11 @@ body::before {
   width: var(--sidebar-w);
   flex-shrink: 0;
   background: var(--surface);
-  border-right: 1px solid var(--border);
+  border-inline-end: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   height: 100vh;
+  height: 100dvh;
   position: relative;
   z-index: 200;
   overflow-y: auto;
@@ -82,7 +84,7 @@ body::before {
 
 .sidebar-logo-tag {
   display: block;
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 3px;
@@ -92,7 +94,7 @@ body::before {
 }
 
 .sidebar-logo {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 28px;
   font-weight: 900;
   letter-spacing: -1px;
@@ -135,7 +137,7 @@ body::before {
   gap: 10px;
   padding: 9px 16px;
   cursor: pointer;
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 15px;
   font-weight: 700;
   letter-spacing: 0.5px;
@@ -176,7 +178,7 @@ body::before {
   background: var(--surface2);
   border: 1px solid var(--border);
   color: var(--muted);
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 1px;
@@ -200,6 +202,7 @@ body::before {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   min-width: 0;
 }
@@ -241,7 +244,7 @@ body::before {
 .hamburger:hover span { background: var(--text); }
 
 .topbar-title {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 18px;
   font-weight: 700;
   letter-spacing: 1px;
@@ -264,6 +267,9 @@ body::before {
   overflow-y: auto;
   overflow-x: hidden;
   padding: 24px;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  touch-action: pan-y;
 }
 
 .sidebar-overlay {
@@ -289,17 +295,17 @@ body::before {
 
 .home-brand .logo-tag {
   display: block;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 9px;
+  font-family: 'Noto Sans Hebrew', sans-serif;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 4px;
+  letter-spacing: 3px;
   color: var(--accent);
   text-transform: uppercase;
   margin-bottom: 6px;
 }
 
 .home-brand h1 {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: clamp(36px, 5vw, 56px);
   font-weight: 900;
   letter-spacing: -2px;
@@ -339,10 +345,10 @@ body::before {
 }
 
 .home-card-label {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 11px;
+  font-family: 'Noto Sans Hebrew', sans-serif;
+  font-size: 14px;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   color: var(--muted);
   margin-bottom: 10px;
@@ -381,9 +387,9 @@ body::before {
 }
 
 .quick-access-label {
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 700;
-  letter-spacing: 3px;
+  letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--muted);
   margin-bottom: 12px;
@@ -431,7 +437,7 @@ body::before {
 }
 
 .module-name {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 16px;
   font-weight: 700;
   letter-spacing: 0.5px;
@@ -455,7 +461,7 @@ body::before {
 }
 
 .page-title {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: clamp(26px, 4vw, 40px);
   font-weight: 900;
   letter-spacing: -1px;
@@ -504,7 +510,7 @@ body::before {
 }
 
 .card-designation {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: clamp(28px, 4.5vw, 48px);
   font-weight: 900;
   letter-spacing: -1px;
@@ -516,7 +522,7 @@ body::before {
 .card-meta { flex: 1; min-width: 160px; }
 
 .card-nickname {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 14px;
   font-weight: 700;
   color: var(--muted);
@@ -619,7 +625,7 @@ th {
 td { padding: 8px 8px; color: #ddd; border-bottom: 1px solid rgba(255,255,255,.04); }
 tr:last-child td { border-bottom: none; }
 tbody tr:hover td { background: rgba(255,255,255,.03); }
-td.mono { font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 14px; color: var(--text); }
+td.mono { font-family: 'Noto Sans Hebrew', sans-serif; font-weight: 600; font-size: 14px; color: var(--text); }
 td.el-name { font-size: 11px; color: var(--muted); }
 
 .section-divider {
@@ -670,13 +676,13 @@ td.el-name { font-size: 11px; color: var(--muted); }
 }
 
 input[type="text"], input[type="date"], textarea, select {
-  background: var(--surface);
-  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  border: 1px solid var(--border);
   color: var(--text);
-  font-family: 'Barlow', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 14px;
   padding: 10px 14px;
-  border-radius: 4px;
+  border-radius: 6px;
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
@@ -686,16 +692,28 @@ input[type="date"]:focus,
 textarea:focus,
 select:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(232,41,11,0.1);
+  box-shadow: 0 0 0 3px rgba(232,41,11,0.12);
 }
 
-.e-search-input {
+.form-row { margin-bottom: 12px; }
+
+.form-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 5px;
+}
+
+input[type="text"].e-search-input {
   width: 100%;
-  font-family: 'Barlow Condensed', sans-serif !important;
-  font-size: 19px !important;
-  font-weight: 600 !important;
+  font-family: 'Noto Sans Hebrew', sans-serif;
+  font-size: 19px;
+  font-weight: 600;
   letter-spacing: 2px;
-  padding: 13px 14px 13px 44px !important;
+  padding: 13px 14px 13px 44px;
   text-transform: uppercase;
 }
 
@@ -731,24 +749,24 @@ select:focus {
   color: var(--accent2);
 }
 
-.suggestion-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: 1px; }
+.suggestion-name { font-family: 'Noto Sans Hebrew', sans-serif; font-weight: 700; letter-spacing: 1px; }
 .suggestion-proc { font-size: 9px; color: var(--muted); text-transform: uppercase; border: 1px solid var(--border); padding: 2px 4px; border-radius: 2px; font-weight: 700; }
 
 /* ═══════════════════════════════════════════
    BUTTONS
 ═══════════════════════════════════════════ */
 .btn {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
   padding: 0 18px;
   height: 42px;
-  border-radius: 4px;
+  border-radius: 6px;
   border: none;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: all 0.2s;
   white-space: nowrap;
   display: inline-flex;
   align-items: center;
@@ -760,7 +778,7 @@ select:focus {
 
 .btn-ghost {
   background: transparent;
-  border: 1.5px solid var(--border);
+  border: 1px solid var(--border);
   color: var(--muted);
 }
 .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
@@ -768,7 +786,7 @@ select:focus {
 .btn-green { background: var(--green); color: #000; }
 .btn-green:hover { background: #4fe088; }
 
-.btn-danger { background: transparent; border: 1.5px solid rgba(232,41,11,0.3); color: var(--accent2); }
+.btn-danger { background: transparent; border: 1px solid rgba(232,41,11,0.3); color: var(--accent2); }
 .btn-danger:hover { background: rgba(232,41,11,0.1); border-color: var(--accent); }
 
 .btn-sm { height: 30px; font-size: 10px; padding: 0 12px; }
@@ -777,7 +795,7 @@ select:focus {
   background: transparent;
   border: 1.5px solid var(--border);
   color: var(--text);
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 2px;
@@ -793,7 +811,7 @@ select:focus {
 .btn-compare-toggle.active { border-color: var(--gold); color: var(--gold); background: rgba(245,166,35,.08); }
 
 .btn-add-compare {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 1.5px;
@@ -831,7 +849,7 @@ select:focus {
 }
 
 .tag {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 1px;
@@ -870,7 +888,7 @@ select:focus {
   color: var(--gold);
   padding: 3px 9px 3px 11px;
   border-radius: 2px;
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 1px;
@@ -884,7 +902,7 @@ select:focus {
 .btn-run-compare {
   background: var(--gold);
   color: #000;
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 2px;
@@ -922,7 +940,7 @@ select:focus {
 }
 
 .compare-view-header h2 {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 16px;
   font-weight: 800;
   letter-spacing: 2px;
@@ -938,7 +956,7 @@ select:focus {
   text-align: left;
   background: var(--surface2);
   border-bottom: 1px solid var(--border);
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 14px;
   font-weight: 800;
   letter-spacing: 2px;
@@ -991,7 +1009,7 @@ select:focus {
 .pc-tig:hover  { border-color: rgba(46,207,207,.3); }  .pc-fcaw:hover { border-color: rgba(245,166,35,.3); }
 .process-icon { font-size: 34px; margin-bottom: 14px; display: block; }
 .process-label {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 26px;
   font-weight: 900;
   letter-spacing: 1px;
@@ -1009,7 +1027,7 @@ select:focus {
 ═══════════════════════════════════════════ */
 .empty-state { text-align: center; padding: 56px 40px; color: var(--muted); }
 .empty-state .big {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 64px;
   font-weight: 900;
   opacity: .07;
@@ -1084,7 +1102,7 @@ select:focus {
 .machine-icon { font-size: 28px; }
 
 .machine-name {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 20px;
   font-weight: 900;
   letter-spacing: 0.5px;
@@ -1115,7 +1133,7 @@ select:focus {
 .machine-spec-row:last-child { border-bottom: none; }
 
 .spec-label { color: var(--muted); font-size: 11px; letter-spacing: 0.5px; }
-.spec-value { font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 14px; }
+.spec-value { font-family: 'Noto Sans Hebrew', sans-serif; font-weight: 600; font-size: 14px; }
 
 /* ═══════════════════════════════════════════
    CHECKLIST MODULE
@@ -1175,7 +1193,7 @@ select:focus {
 }
 
 .checklist-item-label {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 17px;
   font-weight: 700;
   letter-spacing: 0.5px;
@@ -1189,200 +1207,6 @@ select:focus {
 }
 
 .checklist-item-icon { font-size: 20px; }
-
-/* ═══════════════════════════════════════════
-   REPAIRS MODULE
-═══════════════════════════════════════════ */
-.repairs-layout {
-  display: grid;
-  grid-template-columns: 340px 1fr;
-  gap: 20px;
-  align-items: start;
-}
-
-.repair-form-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 20px;
-  position: sticky;
-  top: 0;
-}
-
-.form-title {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 16px;
-}
-
-.form-row { margin-bottom: 12px; }
-
-.form-label {
-  display: block;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 5px;
-}
-
-.form-row input[type="text"],
-.form-row input[type="date"],
-.form-row select,
-.form-row textarea {
-  width: 100%;
-}
-
-.form-row textarea {
-  height: 80px;
-  resize: vertical;
-  font-size: 13px;
-}
-
-select {
-  font-family: 'Barlow', sans-serif;
-  font-size: 14px;
-  cursor: pointer;
-  width: 100%;
-}
-
-select option { background: var(--surface2); }
-
-.repair-log-list { }
-
-.repair-entry {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 16px 18px;
-  margin-bottom: 10px;
-  position: relative;
-}
-
-.repair-entry-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 8px;
-}
-
-.repair-machine {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-}
-
-.repair-date {
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: 0.5px;
-}
-
-.repair-type {
-  font-size: 12px;
-  color: var(--accent2);
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-
-.repair-electrode {
-  font-size: 12px;
-  color: var(--blue);
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-
-.repair-notes { font-size: 13px; color: #aaa; margin-top: 6px; line-height: 1.5; }
-
-.repair-delete {
-  background: none;
-  border: none;
-  color: var(--muted);
-  cursor: pointer;
-  font-size: 16px;
-  padding: 2px;
-  transition: color 0.15s;
-  flex-shrink: 0;
-}
-.repair-delete:hover { color: var(--accent); }
-
-/* ═══════════════════════════════════════════
-   INVENTORY MODULE
-═══════════════════════════════════════════ */
-.inventory-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.inv-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.inv-card.low-stock { border-color: rgba(232,41,11,0.3); background: rgba(232,41,11,0.03); }
-
-.inv-card-header { display: flex; align-items: flex-start; justify-content: space-between; }
-
-.inv-name {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 18px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  line-height: 1.1;
-}
-
-.inv-brand { font-size: 11px; color: var(--muted); margin-top: 2px; }
-
-.inv-qty-row { display: flex; align-items: center; gap: 8px; }
-
-.inv-qty-label { font-size: 11px; color: var(--muted); }
-
-.inv-qty {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 24px;
-  font-weight: 900;
-  color: var(--text);
-  line-height: 1;
-}
-
-.inv-qty.low { color: var(--accent2); }
-
-.inv-actions { display: flex; gap: 6px; }
-
-.inv-btn {
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  color: var(--text);
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  width: 30px;
-  height: 30px;
-  border-radius: 3px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.12s;
-}
-
-.inv-btn:hover { border-color: var(--accent); color: var(--accent); }
 
 /* ═══════════════════════════════════════════
    H-PLUS MODULE
@@ -1400,7 +1224,7 @@ select option { background: var(--surface2); }
 }
 
 .hplus-reminder-text {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 15px;
   font-weight: 700;
   text-transform: uppercase;
@@ -1419,7 +1243,7 @@ select option { background: var(--surface2); }
 }
 
 .hplus-table-title {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 2px;
@@ -1496,7 +1320,7 @@ select option { background: var(--surface2); }
 .tip-list-item:last-child { border-bottom: none; }
 
 .tip-num {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 12px;
   font-weight: 700;
   color: var(--muted);
@@ -1513,7 +1337,7 @@ select option { background: var(--surface2); }
 }
 
 .metals-category-title {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 2px;
@@ -1550,7 +1374,7 @@ select option { background: var(--surface2); }
 }
 
 .metal-name {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 20px;
   font-weight: 900;
   text-transform: uppercase;
@@ -1560,7 +1384,7 @@ select option { background: var(--surface2); }
 .metal-grade {
   font-size: 12px;
   color: var(--muted);
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-weight: 700;
   letter-spacing: 1px;
 }
@@ -1607,7 +1431,7 @@ select option { background: var(--surface2); }
 }
 
 .settings-result-machine {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 22px;
   font-weight: 900;
   text-transform: uppercase;
@@ -1644,7 +1468,7 @@ select option { background: var(--surface2); }
 }
 
 .settings-param-value {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 28px;
   font-weight: 900;
   color: var(--text);
@@ -1686,24 +1510,59 @@ select option { background: var(--surface2); }
 @media (max-width: 767px) {
   .sidebar {
     position: fixed;
-    left: calc(-1 * var(--sidebar-w));
+    inset-inline-start: calc(-1 * var(--sidebar-w));
     top: 0;
     bottom: 0;
     transition: left 0.25s ease;
     z-index: 300;
   }
-  .sidebar.open { left: 0; }
+  .sidebar.open { inset-inline-start: 0; }
   .sidebar-close { display: block; }
   .hamburger { display: flex; }
   #main-content { padding: 16px; }
   .home-grid { grid-template-columns: 1fr; }
-  .repairs-layout { grid-template-columns: 1fr; }
   .settings-selectors { grid-template-columns: 1fr; }
   .tables-row { grid-template-columns: 1fr; }
+
+  /* Weld log form */
   .wl-row { flex-direction: column; gap: 10px; }
-  .wl-row label { min-width: 0; width: 100%; }
+  .wl-row label { min-width: 0 !important; width: 100%; flex: none; }
+  .wl-row input,
+  .wl-row select,
+  .wl-row textarea { width: 100%; box-sizing: border-box; }
   .wl-form { padding: 14px; }
-  .wl-submit { align-self: stretch; }
+  .wl-submit { align-self: stretch; width: 100%; padding: 14px; font-size: 15px; }
+
+  /* Prevent iOS auto-zoom on input focus (requires 16px) */
+  .wl-row input,
+  .wl-row select,
+  .wl-row textarea { font-size: 16px; padding: 10px 12px; }
+  .wl-search input { font-size: 16px; padding: 10px 12px; }
+
+  /* Entry header: wrap date + machine on one line, actions on next */
+  .wl-entry-header {
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    align-items: flex-start;
+  }
+  .wl-entry-machine {
+    white-space: normal;
+    word-break: break-word;
+  }
+  .wl-entry-actions {
+    margin-inline-start: auto;
+    flex-shrink: 0;
+  }
+  .wl-action-btn { font-size: 16px; min-width: 36px; min-height: 36px; }
+
+  /* Entry meta: allow wrap */
+  .wl-entry-meta { gap: 6px 12px; }
+
+  /* Tabs: tighter on small screens */
+  .wl-tab { padding: 8px 12px; font-size: 13px; }
+
+  /* Larger thumbs on mobile for easier tap */
+  .wl-thumb { width: 80px; height: 80px; }
 }
 
 @media (max-width: 480px) {
@@ -1727,14 +1586,14 @@ select option { background: var(--surface2); }
   border: none;
   border-bottom: 2px solid transparent;
   color: var(--muted);
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 15px;
   font-weight: 600;
   letter-spacing: .5px;
   padding: 8px 18px;
   cursor: pointer;
   text-transform: uppercase;
-  transition: color .15s, border-color .15s;
+  transition: color 0.2s, border-color 0.2s;
   margin-bottom: -1px;
 }
 
@@ -1774,45 +1633,41 @@ select option { background: var(--surface2); }
   min-width: 140px;
 }
 
-.wl-row input,
-.wl-row select,
-.wl-row textarea {
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  color: var(--text);
-  font-family: 'Barlow', sans-serif;
-  font-size: 14px;
-  padding: 8px 10px;
-  outline: none;
-  transition: border-color .15s;
-}
-
-.wl-row input:focus,
-.wl-row select:focus,
-.wl-row textarea:focus {
-  border-color: var(--accent);
-}
-
 .wl-row textarea { resize: vertical; }
 
 .wl-submit {
   background: var(--accent);
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   color: #fff;
   cursor: pointer;
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: .5px;
   padding: 10px 24px;
   text-transform: uppercase;
   align-self: flex-start;
-  transition: background .15s;
+  transition: background 0.2s;
 }
 
 .wl-submit:hover { background: var(--accent2); }
+
+.wl-file-upload {
+  background: var(--surface2);
+  border: 1px dashed var(--border);
+  border-radius: 6px;
+  padding: 14px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.wl-file-upload:hover { border-color: var(--accent); color: var(--text); }
+.wl-file-upload-icon { font-size: 22px; margin-bottom: 4px; }
+.wl-file-upload-text { font-size: 12px; }
+.wl-file-upload input[type="file"] { display: none; }
 
 #wl-status {
   font-size: 13px;
@@ -1838,19 +1693,28 @@ select option { background: var(--surface2); }
 .wl-entry-date {
   font-size: 12px;
   color: var(--muted);
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   letter-spacing: .5px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .wl-entry-machine {
   font-size: 14px;
   font-weight: 600;
   color: var(--gold);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  unicode-bidi: plaintext;
 }
 
 .wl-entry-meta {
   display: flex;
-  gap: 14px;
+  flex-wrap: wrap;
+  gap: 8px 14px;
   font-size: 12px;
   color: var(--muted);
   margin-bottom: 6px;
@@ -1860,6 +1724,11 @@ select option { background: var(--surface2); }
   font-size: 13px;
   color: var(--text);
   line-height: 1.5;
+  unicode-bidi: plaintext;
+}
+
+.wl-entry-meta span {
+  unicode-bidi: isolate;
 }
 
 .wl-thumbs {
@@ -1876,10 +1745,33 @@ select option { background: var(--surface2); }
   border-radius: 4px;
   border: 1px solid var(--border);
   cursor: zoom-in;
-  transition: opacity .15s;
+  transition: opacity 0.2s;
 }
 
 .wl-thumb:hover { opacity: .8; }
+
+.wl-thumb-video {
+  cursor: pointer;
+  background: #000;
+}
+
+.wl-thumb-vid-wrap {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.wl-vid-badge {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  background: rgba(0,0,0,.7);
+  color: #fff;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  pointer-events: none;
+}
 
 .wl-empty {
   color: var(--muted);
@@ -1889,7 +1781,7 @@ select option { background: var(--surface2); }
 
 /* Entry actions */
 .wl-entry-actions {
-  margin-left: auto;
+  margin-inline-start: auto;
   display: flex;
   gap: 4px;
 }
@@ -1899,10 +1791,15 @@ select option { background: var(--surface2); }
   border: none;
   cursor: pointer;
   font-size: 14px;
-  padding: 2px 5px;
+  padding: 4px 7px;
   border-radius: 3px;
   opacity: 0.5;
   transition: opacity .15s, background .15s;
+  min-width: 30px;
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .wl-action-btn:hover { opacity: 1; background: var(--surface2); }
@@ -1924,16 +1821,16 @@ select option { background: var(--surface2); }
 .wl-cancel-btn {
   background: none;
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: 6px;
   color: var(--muted);
   cursor: pointer;
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 14px;
   font-weight: 600;
   letter-spacing: .5px;
   padding: 9px 18px;
   text-transform: uppercase;
-  transition: color .15s, border-color .15s;
+  transition: color 0.2s, border-color 0.2s;
 }
 
 .wl-cancel-btn:hover { color: var(--text); border-color: var(--text); }
@@ -1964,7 +1861,192 @@ select option { background: var(--surface2); }
   padding: 0;
 }
 
+
+
+/* Date picker */
+.wl-date-wrap {
+  display: flex;
+  align-items: stretch;
+}
+
+.wl-date-wrap input[name="date"] {
+  flex: 1;
+  border-radius: 6px 0 0 6px;
+  min-width: 0;
+}
+
+.wl-date-hidden {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.wl-date-btn {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-left: none;
+  border-radius: 0 6px 6px 0;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  transition: background .15s, color .15s;
+}
+
+.wl-date-btn:hover {
+  background: var(--surface);
+  color: var(--text);
+}
+
 .wl-thumbs-edit { margin-top: 4px; }
+
+/* Project status badges */
+.wl-status-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 3px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.wl-status-ongoing {
+  background: rgba(62, 168, 255, 0.15);
+  color: var(--blue);
+  border: 1px solid rgba(62, 168, 255, 0.3);
+}
+
+.wl-status-completed {
+  background: rgba(62, 201, 124, 0.15);
+  color: var(--green);
+  border: 1px solid rgba(62, 201, 124, 0.3);
+}
+
+/* Section group headers */
+.wl-section-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--blue);
+  padding: 12px 0 6px;
+  margin-top: 8px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+
+.wl-section-label.wl-section-completed {
+  color: var(--green);
+}
+
+/* Search bar */
+.wl-search {
+  flex: 1;
+  min-width: 0;
+}
+
+.wl-search input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-family: 'Noto Sans Hebrew', sans-serif;
+  font-size: 13px;
+  padding: 7px 12px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.wl-search input:focus {
+  border-color: var(--accent);
+}
+
+.wl-search input::placeholder {
+  color: var(--muted);
+}
+
+/* Machine filter badge */
+.wl-filter-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(245, 166, 35, 0.12);
+  border: 1px solid rgba(245, 166, 35, 0.3);
+  border-radius: 6px;
+  color: var(--gold);
+  font-size: 13px;
+  padding: 8px 14px;
+  margin-bottom: 14px;
+}
+
+.wl-filter-badge strong {
+  color: var(--text);
+}
+
+.wl-filter-badge button {
+  background: none;
+  border: none;
+  color: var(--gold);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  margin-inline-start: auto;
+  transition: background .15s, color .15s;
+}
+
+.wl-filter-badge button:hover {
+  background: rgba(245, 166, 35, 0.2);
+  color: var(--text);
+}
+
+/* Clickable machine name */
+.wl-machine-link {
+  cursor: pointer;
+  transition: text-decoration-color 0.2s;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 2px;
+}
+
+.wl-machine-link:hover {
+  text-decoration-color: var(--gold);
+}
+
+/* Weld log toolbar */
+.wl-toolbar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 8px;
+}
+
+.wl-folder-btn {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: 'Noto Sans Hebrew', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .5px;
+  padding: 6px 14px;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.wl-folder-btn:hover {
+  color: var(--text);
+  border-color: var(--accent);
+  background: var(--surface);
+}
 
 /* ═══════════════════════════════════════════
    TOPBAR REFRESH BUTTON

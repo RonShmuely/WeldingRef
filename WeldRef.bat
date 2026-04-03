@@ -1,5 +1,8 @@
 @echo off
 
+:: Pull latest changes from GitHub
+git -C "C:\Users\ronsh\desktop\weldingref" pull
+
 :: Start Apache (XAMPP)
 start "" "C:\xampp\apache_start.bat"
 

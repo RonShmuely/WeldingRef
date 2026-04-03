@@ -15,7 +15,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=20260404">
+  <link rel="stylesheet" href="lib/photoswipe.min.css">
 </head>
 <body>
 <div id="app">
@@ -60,11 +61,8 @@
       </a>
 
       <div class="nav-section-label" id="nav-sec-records">Records</div>
-      <a class="nav-item" data-module="repairs" onclick="navigate('repairs')">
-        <span class="nav-icon">📋</span><span class="nav-label" id="nav-repairs">Repairs</span>
-      </a>
       <a class="nav-item" data-module="weld-log" onclick="navigate('weld-log')">
-        <span class="nav-icon">🔧</span><span class="nav-label" id="nav-weld-log">Weld Log</span>
+        <span class="nav-icon">📋</span><span class="nav-label" id="nav-weld-log">Repair Log</span>
       </a>
     </nav>
 
@@ -87,7 +85,7 @@
       <div class="topbar-title" id="topbar-title">WeldRef</div>
       <div class="topbar-actions">
         <span class="topbar-date" id="topbar-date"></span>
-        <button class="topbar-refresh" onclick="location.reload()" title="Refresh">↺</button>
+        <button class="topbar-refresh" onclick="navigate(currentModule)" title="Refresh">↺</button>
       </div>
     </header>
 
@@ -107,8 +105,9 @@
 <script src="modules/metals.js"></script>
 <script src="modules/settings.js"></script>
 <script src="modules/hplus.js"></script>
-<script src="modules/repairs.js"></script>
 <script src="modules/weld-log.js"></script>
+<script src="lib/photoswipe.umd.min.js"></script>
+<script src="lib/photoswipe-lightbox.umd.min.js"></script>
 
 <script>
 // ═══════════════════════════════════════════════════════════
@@ -132,7 +131,6 @@ const MODULE_MAP = {
   tip:        TipModule,
   hplus:      HPlusModule,
   checklist:  ChecklistModule,
-  repairs:    RepairsModule,
   'weld-log': WeldLogModule,
 };
 
@@ -147,15 +145,14 @@ function getModuleTitle(mod) {
     tip:        t('Daily Tip',     'טיפ יומי'),
     hplus:      t('H-Plus',        'H-Plus'),
     checklist:  t('Checklist',     'צ\'קליסט'),
-    repairs:    t('Repair Log',    'יומן תיקונים'),
-    'weld-log': t('Weld Log', 'יומן ריתוך'),
+    'weld-log': t('Repair Log', 'יומן תיקונים'),
   };
   return titles[mod] || 'WeldRef';
 }
 
 let currentModule = 'home';
 
-function navigate(mod) {
+function navigate(mod, pushHistory = true) {
   document.querySelectorAll('.nav-item').forEach(el => {
     el.classList.toggle('active', el.dataset.module === mod);
   });
@@ -169,7 +166,25 @@ function navigate(mod) {
   } else {
     MODULE_MAP[mod].render();
   }
+
+  // Push to browser history so back gesture navigates within the app
+  if (pushHistory) {
+    history.pushState({ mod }, '', '#' + mod);
+  }
 }
+
+// Handle back gesture / browser back button
+window.addEventListener('popstate', (e) => {
+  // Gallery handles its own popstate — don't navigate
+  if (e.state && e.state.gallery) return;
+  if (document.querySelector('.wl-gallery-overlay')) return;
+
+  if (e.state && e.state.mod) {
+    navigate(e.state.mod, false);
+  } else {
+    navigate('home', false);
+  }
+});
 
 // ═══════════════════════════════════════════════════════════
 // NAV LABEL TRANSLATION
@@ -185,8 +200,7 @@ function updateNavLabels() {
     'nav-tip':        t('Daily Tip',    'טיפ יומי'),
     'nav-hplus':      t('H-Plus',       'H-Plus'),
     'nav-checklist':  t('Checklist',    'צ\'קליסט'),
-    'nav-repairs':    t('Repairs',      'תיקונים'),
-    'nav-weld-log': t('Weld Log', 'יומן ריתוך'),
+    'nav-weld-log': t('Repair Log', 'יומן תיקונים'),
     'nav-sec-reference': t('Reference', 'עיון'),
     'nav-sec-daily':     t('Daily Tools','כלים יומיים'),
     'nav-sec-records':   t('Records',   'רשומות'),
@@ -272,7 +286,7 @@ function renderHome() {
         <div class="module-name">H-Plus</div>
         <div class="module-desc">${t('Human performance · Monroe','ביצועים אנושיים · מונרו')}</div>
       </div>
-      <div class="module-card" onclick="navigate('repairs')">
+      <div class="module-card" onclick="navigate('weld-log')">
         <span class="module-icon">📋</span>
         <div class="module-name">${t('Repair Log','יומן תיקונים')}</div>
         <div class="module-desc">${t('Track your welds','מעקב ריתוכים')}</div>
@@ -338,8 +352,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Set nav labels for current language
   updateNavLabels();
 
-  // Render home
-  navigate('home');
+  // Set initial history state and render home
+  history.replaceState({ mod: 'home' }, '', '#home');
+  navigate('home', false);
 
   // H-Plus reminder badge on nav item
   if (HPlusModule.shouldShowReminder()) {
